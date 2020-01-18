@@ -29,11 +29,11 @@ export abstract class AbstractNode extends Drupdatable {
         let routingTable: [Link, AbstractNode][] =
             this.getRoutableLinks().map(x => [x, x.getOtherEnd(this)]);
         
-        while(routingTable.length >= 0){
+        while(routingTable.length > 0){
             let visited: AbstractNode[] = [];
             visited.push(this);
             
-            if(routingTable[0][1] = p.destination){
+            if(routingTable[0][1] == p.destination){
                 return routingTable[0][0].trySendPacket(p, this);
             }
 
@@ -49,6 +49,6 @@ export abstract class AbstractNode extends Drupdatable {
             routingTable.shift();
         }
         
-        return true;
+        return false;
     }
 }

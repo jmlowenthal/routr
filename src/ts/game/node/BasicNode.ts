@@ -37,16 +37,23 @@ export class BasicNode extends AbstractNode {
         }
         
         //sending packets
+        if (this.packetsList.length > 0) {
             if(this.route(this.packetsList[0])){
                 this.packetsList.shift();
             }
+            else {
+                let head = this.packetsList[0];
+                this.packetsList.shift();
+                this.packetsList.push(head);
+            }
+        }
         
         this.attachedLinks.sort((x, y) => 0.5 - Math.random())
     }
 
     private probability(): number {
         // return Math.exp(this.timer - BasicNode.MAX_PACKET_DELAY);
-        return 0.1;
+        return 0.01;
     }
 
     isRoutable(): boolean {

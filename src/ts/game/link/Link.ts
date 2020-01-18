@@ -6,7 +6,7 @@ import { BasicNode } from "../node/BasicNode";
 
 export default class Link extends Drupdatable {
 
-    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.000001;
+    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.0001;
 
     private nodes: [AbstractNode, AbstractNode]; // [0] <----> [1]
     private bandwidth: number = 1;
@@ -101,8 +101,9 @@ export default class Link extends Drupdatable {
         ctx.stroke();
         
         this.packets.forEach(p => {
-            let x = x0 * p[1] + x1 * (1 - p[1]);
-            let y = y0 * p[1] + y1 * (1 - p[1]);
+            let l = p[2] ? p[1] : 1 - p[1];
+            let x = x0 * (1 - l) + x1 * l;
+            let y = y0 * (1 - l) + y1 * l;
             ctx.fillRect(x, y, AbstractPacket.WIDTH, AbstractPacket.WIDTH);
         });
     }
