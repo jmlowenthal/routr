@@ -2,73 +2,66 @@ import { AbstractNode } from './AbstractNode';
 import { Packet } from '../Packet';
 
 export class BasicNode extends AbstractNode {
-    private timer: number = 0;
-    // private listeners: ((_: Packet) => void)[] = [];
-    private getDestination: (() => AbstractNode);
-    private packetsList: Packet[] = [];
-    private edgeList: Link[] = [];
 
-    constructor(getDestination: (() => AbstractNode)) {
+    public static readonly MAX_HEALTH: number = 10;
+    public static readonly MAX_QUEUE_LENGTH: number = 20;
+    public static readonly MAX_PACKET_DELAY: number = 10;
+
+    private timer: number = 0;
+    private generateDestination: (() => AbstractNode);
+    private packetsList: Packet[] = [];
+    private health: number = BasicNode.MAX_HEALTH;
+
+    constructor(generateDestination: (() => AbstractNode)) {
         super();
-        this.getDestination = getDestination;
+        this.generateDestination = generateDestination;
     }
 
     public update(dt: number): void {
         this.timer += dt;
         if (Math.random() > this.probability()) {
             this.timer = 0;
-            var dest = this.getDestination();
+            var dest = this.generateDestination();
             var packet = new Packet(this, dest);
             this.packetsList.push(packet);
             // this.listeners.forEach(function(f) { f(packet) })
         }
     }
 
-    // Returns true if it successfully sends a packet onwards,
-    // Otherwise is false
-    // Does not remove packet from list
-    public route(p: Packet): boolean {
-      if(edgeList.length <= 0){
-        return false;
-      }
-
-      let toSearchList: [Link, AbstractNode][] = [];
-      edgeList.forEach(x => toSearchList.push([x, x.otherEnd(this)]))
-      
-      while(toSearchList.length >= 0){
-        let visited: AbstractNode[] = [];
-        visited.push(this);
-       
-        if(toSearchList[0][1] = p.Destination){
-          toSearchList[0][0].addPacket(p);
-          break;
-        }
-
-        let n: AbstractNode = toSearchList[0][1];
-
-        n.edgeList.forEach(
-          x => visited.includes(x.otherEnd(n)) ? 
-                toSearchList.push([toSearchList[0][0], x.otherEnd(n)]) :
-                undefined
-        );
-
-        visited.push(n);
-
-        toSearchList.shift();
-      }
-      
-      return true;
-    }
-
-    // public addListener(listener: (_: Packet) => void) {
-    //     this.listeners.push(listener);
-    // }
-
-    // public removeListener(listener: (_: Packet) => void) {
-    //     this.listeners = this.listeners.filter(l => l !== listener);
-    // }
-
     private probability(): number {
-        return 0.5;
+        return Math.exp(this.timer - BasicNode.MAX_PACKET_DELAY);
     }
+
+    isRoutable(): boolean {
+        return this.health > 0;
+    }
+
+    receivePacket(p: Packet): void {
+        if (p.isBad()) {
+            this.health = Math.max(this.health - 1, 0);
+        }
+        else if (p.isAntiMalware()) {
+            this.health = Math.min(this.health + 1, BasicNode.MAX_HEALTH);
+        }
+        else {
+            this.packetsList.push(p);
+        }
+    }
+    
+    isQueueOverflowed(): boolean {
+        return this.packetsList.length > BasicNode.MAX_QUEUE_LENGTH;
+    }
+
+    getHealth(): number {
+        return this.health;
+    }
+
+    setHealth(health: number): void {
+        this.health = Math.max(0, Math.min(health, BasicNode.MAX_HEALTH));
+    }
+
+    getPacketList(): Packet[] {
+        return this.packetsList;
+    }
+
 }
