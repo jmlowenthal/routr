@@ -1,3 +1,3 @@
-class Link {
+export class Link {
     
 }
