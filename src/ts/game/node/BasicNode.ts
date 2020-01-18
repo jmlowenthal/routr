@@ -25,6 +25,7 @@ export class BasicNode extends AbstractNode {
     }
 
     public update(dt: number): void {
+        //generate packets
         this.timer += dt;
         if (Math.random() < this.probability()) {
             this.timer = 0;
@@ -34,6 +35,13 @@ export class BasicNode extends AbstractNode {
                 this.packetsList.push(packet);
             }
         }
+        
+        //sending packets
+        if(this.route(this.packetsList[0])){
+          packetsList.shift();
+        }
+        
+        this.attachedLinks.sort((x, y) => 0.5 - Math.random())
     }
 
     private probability(): number {
