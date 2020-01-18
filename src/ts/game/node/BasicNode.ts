@@ -1,6 +1,7 @@
 import { AbstractNode } from './AbstractNode';
 import { AbstractPacket } from '../packet/AbstractPacket';
 import { BasicPacket } from '../packet/BasicPacket';
+import { BoundingBox } from '../types';
 
 const radius = 20;
 
@@ -24,11 +25,11 @@ export class BasicNode extends AbstractNode {
 
     public update(dt: number): void {
         this.timer += dt;
-        if (Math.random() > this.probability()) {
+        if (Math.random() < this.probability()) {
             this.timer = 0;
-            var dest = this.generateDestination();
-            var packet = new BasicPacket(this, dest);
-            this.packetsList.push(packet);
+            //var dest = this.generateDestination();
+            // var packet = new BasicPacket(this, dest);
+            // this.packetsList.push(packet);
             // this.listeners.forEach(function(f) { f(packet) })
         }
     }
@@ -75,6 +76,10 @@ export class BasicNode extends AbstractNode {
         ctx.textBaseline = 'middle';
         ctx.font = '12px';
         ctx.fillText(this.name, this.x, this.y);
+    }
+
+    getBoundingBox(): BoundingBox {
+        return [this.x - radius, this.y - radius, this.x + radius, this.y + radius];
     }
 
     getPacketList(): AbstractPacket[] {

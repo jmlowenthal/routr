@@ -1,16 +1,28 @@
 import Drupdatable from "./Drupdatable";
 import { BasicNode } from "./node/BasicNode";
+import GameMutator from "./GameMutator";
+import { AbstractNode } from "./node/AbstractNode";
 
 
 export default class Game {
     private iteration = 0;
     private initialTime?: number;
     private time = 0;
+    private gameMutator: GameMutator;
 
     private objects: Drupdatable[] = [];
 
     constructor() {
-        this.registerObject(new BasicNode(() => {throw new Error()}, "X", 200, 50));
+        let generateDestination = () => this.objects
+                .filter(o => o instanceof BasicNode)
+                .sort((x, y) => 0.5 - Math.random())
+                [0] as AbstractNode;
+        this.registerObject(new BasicNode(generateDestination, "A", 200, 50));
+        this.registerObject(new BasicNode(generateDestination, "B", 600, 50));
+        this.registerObject(new BasicNode(generateDestination, "C", 400, 150));
+
+        this.gameMutator = new GameMutator(generateDestination);
+        this.registerObject(this.gameMutator);
     }
 
     update(timestamp: number, ctx: CanvasRenderingContext2D, width: number, height: number) {
@@ -25,19 +37,8 @@ export default class Game {
             this.time = timestamp - this.initialTime;
         }
 
+        this.gameMutator.setScreenDimensions(width, height);
         ctx.clearRect(0, 0, width, height);
-
-        ctx.fillStyle = 'rgb(200, 0, 0)';
-        ctx.fillRect(10, 10, 50, 50);
-
-        ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-        ctx.fillRect(30, 30, 50, 50);
-
-        ctx.fillStyle = 'white';
-        ctx.font = '20px sans-serif';
-        ctx.fillText("Frame " + this.iteration, 60, 120);
-        ctx.fillText("Time " + this.time, 60, 150);
-        ctx.fillText("Average fps: " + this.iteration / this.time * 1000, 60, 180);
 
         [...this.objects].forEach(object => object.update(dt, this));
         this.objects.forEach(object => object.draw(ctx));
@@ -49,5 +50,9 @@ export default class Game {
 
     unregisterObject(object: Drupdatable) {
         this.objects = this.objects.filter(obj => obj !== object);
+    }
+
+    getObjects(): Drupdatable[] {
+        return this.objects;
     }
 }
