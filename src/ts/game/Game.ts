@@ -2,6 +2,7 @@ import Drupdatable from "./Drupdatable";
 import { BasicNode } from "./node/BasicNode";
 import GameMutator from "./GameMutator";
 import { AbstractNode } from "./node/AbstractNode";
+import { AvastNode } from "./node/AvastNode";
 
 
 export default class Game {
