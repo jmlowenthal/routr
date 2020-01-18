@@ -6,7 +6,7 @@ import { BasicNode } from "../node/BasicNode";
 
 export default class Link extends Drupdatable {
 
-    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.0001;
+    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.015;
 
     private nodes: [AbstractNode, AbstractNode]; // [0] <----> [1]
     private bandwidth: number = 1;
@@ -19,7 +19,7 @@ export default class Link extends Drupdatable {
         this.nodes = nodes;
         let dx = nodes[0].x - nodes[1].x;
         let dy = nodes[0].y - nodes[1].y;
-        this.latency = Math.sqrt(dx * dx + dy * dy) * Link.LENGTH_TIME_MAGIC_FACTOR_OF_PING;
+        this.latency = Link.LENGTH_TIME_MAGIC_FACTOR_OF_PING / Math.sqrt(dx * dx + dy * dy);
         nodes[0].attachedLinks.push(this);
         nodes[1].attachedLinks.push(this);
     }
@@ -60,8 +60,8 @@ export default class Link extends Drupdatable {
         this.bandwidth = Math.max(0, bandwidth);
     }
 
-    private static progressPacket(dt: number, progress: number): number {
-        let delta = dt * this.LENGTH_TIME_MAGIC_FACTOR_OF_PING;
+    private progressPacket(dt: number, progress: number): number {
+        let delta = dt * this.latency;
         return Math.min(progress + delta, 1)
     }
 
@@ -70,7 +70,7 @@ export default class Link extends Drupdatable {
         this.packets = this.packets
             .flatMap(function(t): [AbstractPacket, number, boolean][] {
                 var oldpos = t[1]
-                var pos = Link.progressPacket(dt, oldpos);
+                var pos = _this.progressPacket(dt, oldpos);
                 if (_this.attachment && oldpos < 0.5 && pos >= 0.5) {
                     let something = _this.attachment.actUpon(t[0]);
                     return something.map(s => [s, t[1], t[2]]);
@@ -91,6 +91,7 @@ export default class Link extends Drupdatable {
         let x1 = this.nodes[1].x, y1 = this.nodes[1].y;
         let dx = x0 - x1, dy = y0 - y1;
         let len = Math.sqrt(dx * dx + dy * dy);
+        ctx.lineWidth = 2;
         dx = dx / len * BasicNode.RADIUS;
         dy = dy / len * BasicNode.RADIUS;
         x0 -= dx; y0 -= dy;
@@ -102,8 +103,8 @@ export default class Link extends Drupdatable {
         
         this.packets.forEach(p => {
             let l = p[2] ? p[1] : 1 - p[1];
-            let x = x0 * (1 - l) + x1 * l;
-            let y = y0 * (1 - l) + y1 * l;
+            let x = x0 * (1 - l) + x1 * l - AbstractPacket.WIDTH / 2;
+            let y = y0 * (1 - l) + y1 * l - AbstractPacket.WIDTH / 2;
             ctx.fillRect(x, y, AbstractPacket.WIDTH, AbstractPacket.WIDTH);
         });
     }
