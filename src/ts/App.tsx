@@ -1,5 +1,5 @@
 import React from 'react';
-import { Game } from './Game';
+import { GameContainer } from './GameContainer';
 import '../css/App.css';
 
 class App extends React.Component<{}, AppState> {
@@ -21,7 +21,7 @@ class App extends React.Component<{}, AppState> {
           <h1>Routr</h1> 
         </header>
         <div ref="game" className="App-game">
-        <Game width={this.state.gameWidth} height={this.state.gameHeight}/>
+        <GameContainer width={this.state.gameWidth} height={this.state.gameHeight}/>
         </div>
       </div>
     );
