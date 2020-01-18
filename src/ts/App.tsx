@@ -1,6 +1,6 @@
 import React from 'react';
 import { Game } from './Game';
-import './App.css';
+import '../css/App.css';
 
 class App extends React.Component<{}, AppState> {
   constructor(params: {}) {
