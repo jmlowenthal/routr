@@ -1,5 +1,5 @@
 import { AbstractNode } from './AbstractNode';
-import { Packet } from '../Packet';
+import { AbstractPacket } from '../packet/AbstractPacket';
 
 export class BasicNode extends AbstractNode {
 
@@ -9,7 +9,7 @@ export class BasicNode extends AbstractNode {
 
     private timer: number = 0;
     private generateDestination: (() => AbstractNode);
-    private packetsList: Packet[] = [];
+    private packetsList: AbstractPacket[] = [];
     private health: number = BasicNode.MAX_HEALTH;
 
     constructor(generateDestination: (() => AbstractNode)) {
@@ -22,7 +22,7 @@ export class BasicNode extends AbstractNode {
         if (Math.random() > this.probability()) {
             this.timer = 0;
             var dest = this.generateDestination();
-            var packet = new Packet(this, dest);
+            var packet = new AbstractPacket(this, dest);
             this.packetsList.push(packet);
             // this.listeners.forEach(function(f) { f(packet) })
         }
@@ -36,7 +36,7 @@ export class BasicNode extends AbstractNode {
         return this.health > 0;
     }
 
-    receivePacket(p: Packet): void {
+    receivePacket(p: AbstractPacket): void {
         if (p.isBad()) {
             this.health = Math.max(this.health - 1, 0);
         }
@@ -60,7 +60,7 @@ export class BasicNode extends AbstractNode {
         this.health = Math.max(0, Math.min(health, BasicNode.MAX_HEALTH));
     }
 
-    getPacketList(): Packet[] {
+    getPacketList(): AbstractPacket[] {
         return this.packetsList;
     }
 
