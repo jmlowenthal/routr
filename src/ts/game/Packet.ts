@@ -1,10 +1,10 @@
-import { NetworkNode } from "./nodes/NetworkNode";
+import { AbstractNode } from "./node/AbstractNode";
 
 export class Packet {
-    source: NetworkNode;
-    destination: NetworkNode;
+    source: AbstractNode;
+    destination: AbstractNode;
 
-    constructor(source: NetworkNode, dest: NetworkNode) {
+    constructor(source: AbstractNode, dest: AbstractNode) {
         this.source = source;
         this.destination = dest;
     }

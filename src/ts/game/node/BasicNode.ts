@@ -1,14 +1,14 @@
-import { NetworkNode } from './NetworkNode';
+import { AbstractNode } from './AbstractNode';
 import { Packet } from '../Packet';
 
-export class BasicNode extends NetworkNode {
+export class BasicNode extends AbstractNode {
     private timer: number = 0;
     // private listeners: ((_: Packet) => void)[] = [];
-    private getDestination: (() => NetworkNode);
+    private getDestination: (() => AbstractNode);
     private packetsList: Packet[] = [];
     private edgeList: Link[] = [];
 
-    constructor(getDestination: (() => NetworkNode)) {
+    constructor(getDestination: (() => AbstractNode)) {
         super();
         this.getDestination = getDestination;
     }
@@ -27,16 +27,16 @@ export class BasicNode extends NetworkNode {
     // Returns true if it successfully sends a packet onwards,
     // Otherwise is false
     // Does not remove packet from list
-    public route(p: Packet): bool {
+    public route(p: Packet): boolean {
       if(edgeList.length <= 0){
         return false;
       }
 
-      let toSearchList: [Link, NetworkNode][] = [];
+      let toSearchList: [Link, AbstractNode][] = [];
       edgeList.forEach(x => toSearchList.push([x, x.otherEnd(this)]))
       
       while(toSearchList.length >= 0){
-        let visited: NetworkNode[] = [];
+        let visited: AbstractNode[] = [];
         visited.push(this);
        
         if(toSearchList[0][1] = p.Destination){
@@ -44,7 +44,7 @@ export class BasicNode extends NetworkNode {
           break;
         }
 
-        let n: NetworkNode = toSearchList[0][1];
+        let n: AbstractNode = toSearchList[0][1];
 
         n.edgeList.forEach(
           x => visited.includes(x.otherEnd(n)) ? 
@@ -57,6 +57,7 @@ export class BasicNode extends NetworkNode {
         toSearchList.shift();
       }
       
+      return true;
     }
 
     // public addListener(listener: (_: Packet) => void) {
