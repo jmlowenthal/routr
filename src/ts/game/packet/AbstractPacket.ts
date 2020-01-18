@@ -2,6 +2,8 @@ import { AbstractNode } from "../node/AbstractNode";
 
 export abstract class AbstractPacket {
 
+    public static readonly WIDTH: number = 5;
+
     source: AbstractNode;
     destination: AbstractNode;
 

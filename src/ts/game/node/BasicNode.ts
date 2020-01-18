@@ -10,12 +10,14 @@ export class BasicNode extends AbstractNode {
     public static readonly MAX_QUEUE_LENGTH: number = 20;
     public static readonly MAX_PACKET_DELAY: number = 10;
 
+    public static readonly MAX_STACK_HEIGHT: number = 5;
+
     private timer: number = 0;
     private packetsList: AbstractPacket[] = [];
     private health: number = BasicNode.MAX_HEALTH;
 
     constructor(
-            private generateDestination: (() => AbstractNode),
+            private generateDestination: (_: AbstractNode) => AbstractNode | null,
             private name: string,
             x: number,
             y: number) {
@@ -24,17 +26,19 @@ export class BasicNode extends AbstractNode {
 
     public update(dt: number): void {
         this.timer += dt;
-        if (Math.random() > this.probability()) {
+        if (Math.random() < this.probability()) {
             this.timer = 0;
-            var dest = this.generateDestination();
-            var packet = new BasicPacket(this, dest);
-            this.packetsList.push(packet);
-            // this.listeners.forEach(function(f) { f(packet) })
+            var dest = this.generateDestination(this);
+            if (dest) {
+                var packet = new BasicPacket(this, dest);
+                this.packetsList.push(packet);
+            }
         }
     }
 
     private probability(): number {
-        return Math.exp(this.timer - BasicNode.MAX_PACKET_DELAY);
+        // return Math.exp(this.timer - BasicNode.MAX_PACKET_DELAY);
+        return 0.1;
     }
 
     isRoutable(): boolean {
@@ -75,6 +79,14 @@ export class BasicNode extends AbstractNode {
         ctx.textBaseline = 'middle';
         ctx.font = '12px';
         ctx.fillText(this.name, this.x, this.y);
+        let maxj = Math.floor(this.packetsList.length / BasicNode.MAX_STACK_HEIGHT);
+        this.packetsList.forEach((p, i) => {
+            let j = Math.floor(i / BasicNode.MAX_STACK_HEIGHT);
+            i = i % BasicNode.MAX_STACK_HEIGHT;
+            let x = this.x - (AbstractPacket.WIDTH / 2) + (AbstractPacket.WIDTH * 1.5) * (j - maxj / 2);
+            let y = this.y - radius - (AbstractPacket.WIDTH * 1.5) * (i + 2);
+            ctx.fillRect(x, y, AbstractPacket.WIDTH, AbstractPacket.WIDTH);
+        });
     }
 
     getPacketList(): AbstractPacket[] {
