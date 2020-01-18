@@ -37,7 +37,7 @@ export class BasicNode extends AbstractNode {
         
         //sending packets
         if(this.route(this.packetsList[0])){
-          packetsList.shift();
+            this.packetsList.shift();
         }
         
         this.attachedLinks.sort((x, y) => 0.5 - Math.random())
