@@ -1,6 +1,6 @@
 .App {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,6 +9,27 @@
   color: white;
 }
 
+.App-header {
+  vertical-align: middle;
+  font-size: 2em;
+  line-height: 3em;
+  flex-grow: 0;
+}
+
+.App-header h1 {
+  margin: 0;
+}
+
 .App-link {
   color: #61dafb;
+}
+
+.App-game {
+  width: 100vw;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none;
 }
