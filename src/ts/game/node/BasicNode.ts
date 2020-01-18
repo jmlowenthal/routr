@@ -100,7 +100,7 @@ export class BasicNode extends AbstractNode {
     }
 
     getBoundingBox(): BoundingBox {
-        return [this.x - radius, this.y - radius, this.x + radius, this.y + radius];
+        return [this.x - BasicNode.RADIUS, this.y - BasicNode.RADIUS, this.x + BasicNode.RADIUS, this.y + BasicNode.RADIUS];
     }
 
     getPacketList(): AbstractPacket[] {
