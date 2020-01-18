@@ -1,5 +1,6 @@
 import { AbstractPacket } from "../packet/AbstractPacket";
 import { AbstractNode } from "../node/AbstractNode";
+import { AbstractAttachment } from "./AbstractAttachment";
 
 export class Link implements Updatable {
 
@@ -9,6 +10,7 @@ export class Link implements Updatable {
     private bandwidth: number = 1;
     private packets: [AbstractPacket, number, boolean][] = []; // true ->, false <-
     private latency: number;
+    public attachment?: AbstractAttachment;
 
     constructor(nodes: [AbstractNode, AbstractNode]) {
         this.nodes = nodes;
@@ -59,7 +61,17 @@ export class Link implements Updatable {
     }
 
     public update(dt: number) {
-        this.packets = this.packets.map(triplet => [triplet[0], Link.progressPacket(dt, triplet[1]), triplet[2]]);
+        let _this = this;
+        this.packets = this.packets
+            .flatMap(function(t): [AbstractPacket, number, boolean][] {
+                var oldpos = t[1]
+                var pos = Link.progressPacket(dt, oldpos);
+                if (_this.attachment && oldpos < 0.5 && pos >= 0.5) {
+                    let something = _this.attachment.actUpon(t[0]);
+                    return something.map(s => [s, t[1], t[2]]);
+                }
+                return [[t[0], pos, t[2]]];
+            });
         this.packets
             .filter(triplet => triplet[1] >= 1)
             .forEach(triplet => {
