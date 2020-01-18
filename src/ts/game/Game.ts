@@ -10,7 +10,7 @@ export default class Game {
     private objects: Drupdatable[] = [];
 
     constructor() {
-        this.registerObject(new BasicNode(200, 50));
+        this.registerObject(new BasicNode(() => {throw new Error()}, "X", 200, 50));
     }
 
     update(timestamp: number, ctx: CanvasRenderingContext2D, width: number, height: number) {

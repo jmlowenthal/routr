@@ -1,13 +1,13 @@
 import Drupdatable from "../Drupdatable";
 import Link from "../link/Link";
-import { Packet } from "../Packet";
+import { AbstractPacket } from "../packet/AbstractPacket";
 
 export abstract class AbstractNode extends Drupdatable {
 
     public attachedLinks: Link[] = [];
     
     abstract isRoutable(): boolean;
-    abstract receivePacket(_: Packet): void;
+    abstract receivePacket(_: AbstractPacket): void;
     abstract isQueueOverflowed(): boolean;
 
     constructor(public readonly x: number, public readonly y: number) {
@@ -21,7 +21,7 @@ export abstract class AbstractNode extends Drupdatable {
     // Returns true if it successfully sends a packet onwards,
     // Otherwise is false
     // Does not remove packet from list
-    protected route(p: Packet): boolean {
+    protected route(p: AbstractPacket): boolean {
         if(this.attachedLinks.length <= 0){
             return false;
         }

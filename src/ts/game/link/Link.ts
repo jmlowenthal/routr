@@ -1,4 +1,4 @@
-import { Packet } from "../Packet";
+import { AbstractPacket } from "../packet/AbstractPacket";
 import { AbstractNode } from "../node/AbstractNode";
 import Drupdatable from "../Drupdatable";
 
@@ -8,7 +8,7 @@ export default class Link extends Drupdatable {
 
     private nodes: [AbstractNode, AbstractNode]; // [0] <----> [1]
     private bandwidth: number = 1;
-    private packets: [Packet, number, boolean][] = []; // true ->, false <-
+    private packets: [AbstractPacket, number, boolean][] = []; // true ->, false <-
     private latency: number;
 
     constructor(nodes: [AbstractNode, AbstractNode]) {
@@ -19,7 +19,7 @@ export default class Link extends Drupdatable {
         this.latency = Math.sqrt(dx * dx + dy * dy) * Link.LENGTH_TIME_MAGIC_FACTOR_OF_PING;
     }
 
-    public trySendPacket(packet: Packet, from: AbstractNode): boolean {
+    public trySendPacket(packet: AbstractPacket, from: AbstractNode): boolean {
         if (this.packets.length > this.bandwidth) {
             return false;
         }

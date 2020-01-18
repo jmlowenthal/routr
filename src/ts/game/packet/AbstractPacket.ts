@@ -1,6 +1,7 @@
-import { AbstractNode } from "./node/AbstractNode";
+import { AbstractNode } from "../node/AbstractNode";
 
-export class Packet {
+export abstract class AbstractPacket {
+
     source: AbstractNode;
     destination: AbstractNode;
 
@@ -8,4 +9,8 @@ export class Packet {
         this.source = source;
         this.destination = dest;
     }
+
+    abstract isBad(): boolean;
+    abstract isAntiMalware(): boolean;
+
 }
