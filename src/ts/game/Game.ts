@@ -39,6 +39,7 @@ export default class Game {
 
         this.gameMutator.setScreenDimensions(width, height);
         ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = 'white';
 
         [...this.objects].forEach(object => object.update(dt, this));
         this.objects.forEach(object => object.draw(ctx));
