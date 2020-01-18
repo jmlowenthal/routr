@@ -1,18 +1,16 @@
 import React from 'react';
 
-export class Game extends React.Component<GameProps, GameState> {
+export class Game extends React.Component<GameProps> {
     constructor(props: GameProps) {
-        super(props)
-        this.state = {
-            width: props.width,
-            height: props.height,
-        };
+        super(props);
+
+        this.update = this.update.bind(this);
     }
 
     render() {
         return (
             <div>
-                <canvas ref="canvas" width={this.state.width} height={this.state.height}>
+                <canvas ref="canvas" width={this.props.width} height={this.props.height}>
                     Your browser doesn't support this functionality
                 </canvas>
                 <div className="hidden">
@@ -22,7 +20,7 @@ export class Game extends React.Component<GameProps, GameState> {
         );
     }
 
-    componentDidMount() {
+    update() {
         const canvas = this.refs.canvas as HTMLCanvasElement;
         const ctx = canvas.getContext("2d")!;
         //const img = this.refs.image;
@@ -35,14 +33,17 @@ export class Game extends React.Component<GameProps, GameState> {
             ctx.fillRect(30, 30, 50, 50);
         });
     }
+
+    componentWillReceiveProps() {
+        this.update();
+    }
+
+    componentWillUpdate() {
+        this.update();
+    }
 }
 
 type GameProps = {
     width: number,
     height: number
-}
-
-type GameState = {
-    width: number,
-    height: number,
 }
