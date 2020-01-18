@@ -87,16 +87,16 @@ export class BasicNode extends AbstractNode {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 5;
         ctx.beginPath();
         ctx.moveTo(this.x + BasicNode.RADIUS, this.y);
         ctx.arc(this.x, this.y, BasicNode.RADIUS, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.font = '20px sans-serif';
+        ctx.font = 'bold 20px sans-serif';
         ctx.fillText(this.name, this.x, this.y + 2);
-        let maxj = Math.floor(this.packetsList.length / BasicNode.MAX_STACK_HEIGHT);
+        let maxj = Math.floor((this.packetsList.length - 1) / BasicNode.MAX_STACK_HEIGHT);
         this.packetsList.forEach((p, i) => {
             let j = Math.floor(i / BasicNode.MAX_STACK_HEIGHT);
             i = i % BasicNode.MAX_STACK_HEIGHT;
