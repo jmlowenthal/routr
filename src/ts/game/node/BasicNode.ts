@@ -2,10 +2,9 @@ import { AbstractNode } from './AbstractNode';
 import { AbstractPacket } from '../packet/AbstractPacket';
 import { BasicPacket } from '../packet/BasicPacket';
 
-const radius = 20;
-
 export class BasicNode extends AbstractNode {
 
+    public static readonly RADIUS: number = 20;
     public static readonly MAX_HEALTH: number = 10;
     public static readonly MAX_QUEUE_LENGTH: number = 20;
     public static readonly MAX_PACKET_DELAY: number = 10;
@@ -72,8 +71,8 @@ export class BasicNode extends AbstractNode {
     draw(ctx: CanvasRenderingContext2D) {
         ctx.strokeStyle = 'white';
         ctx.beginPath();
-        ctx.moveTo(this.x + radius, this.y);
-        ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI);
+        ctx.moveTo(this.x + BasicNode.RADIUS, this.y);
+        ctx.arc(this.x, this.y, BasicNode.RADIUS, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -84,7 +83,7 @@ export class BasicNode extends AbstractNode {
             let j = Math.floor(i / BasicNode.MAX_STACK_HEIGHT);
             i = i % BasicNode.MAX_STACK_HEIGHT;
             let x = this.x - (AbstractPacket.WIDTH / 2) + (AbstractPacket.WIDTH * 1.5) * (j - maxj / 2);
-            let y = this.y - radius - (AbstractPacket.WIDTH * 1.5) * (i + 2);
+            let y = this.y - BasicNode.RADIUS - (AbstractPacket.WIDTH * 1.5) * (i + 2);
             ctx.fillRect(x, y, AbstractPacket.WIDTH, AbstractPacket.WIDTH);
         });
     }
