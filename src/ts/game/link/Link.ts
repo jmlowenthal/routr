@@ -1,8 +1,9 @@
 import { AbstractPacket } from "../packet/AbstractPacket";
 import { AbstractNode } from "../node/AbstractNode";
 import { AbstractAttachment } from "./AbstractAttachment";
+import Drupdatable from "../Drupdatable";
 
-export class Link implements Updatable {
+export default class Link extends Drupdatable {
 
     public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.01;
 
@@ -13,6 +14,7 @@ export class Link implements Updatable {
     public attachment?: AbstractAttachment;
 
     constructor(nodes: [AbstractNode, AbstractNode]) {
+        super();
         this.nodes = nodes;
         let dx = nodes[0].x - nodes[1].x;
         let dy = nodes[0].y - nodes[1].y;

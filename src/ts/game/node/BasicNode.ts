@@ -1,5 +1,8 @@
 import { AbstractNode } from './AbstractNode';
 import { AbstractPacket } from '../packet/AbstractPacket';
+import { BasicPacket } from '../packet/BasicPacket';
+
+const radius = 20;
 
 export class BasicNode extends AbstractNode {
 
@@ -8,13 +11,15 @@ export class BasicNode extends AbstractNode {
     public static readonly MAX_PACKET_DELAY: number = 10;
 
     private timer: number = 0;
-    private generateDestination: (() => AbstractNode);
     private packetsList: AbstractPacket[] = [];
     private health: number = BasicNode.MAX_HEALTH;
 
-    constructor(generateDestination: (() => AbstractNode)) {
-        super();
-        this.generateDestination = generateDestination;
+    constructor(
+            private generateDestination: (() => AbstractNode),
+            private name: string,
+            x: number,
+            y: number) {
+        super(x, y);
     }
 
     public update(dt: number): void {
@@ -22,7 +27,7 @@ export class BasicNode extends AbstractNode {
         if (Math.random() > this.probability()) {
             this.timer = 0;
             var dest = this.generateDestination();
-            var packet = new AbstractPacket(this, dest);
+            var packet = new BasicPacket(this, dest);
             this.packetsList.push(packet);
             // this.listeners.forEach(function(f) { f(packet) })
         }
@@ -58,6 +63,18 @@ export class BasicNode extends AbstractNode {
 
     setHealth(health: number): void {
         this.health = Math.max(0, Math.min(health, BasicNode.MAX_HEALTH));
+    }
+
+    draw(ctx: CanvasRenderingContext2D) {
+        ctx.strokeStyle = 'white';
+        ctx.beginPath();
+        ctx.moveTo(this.x + radius, this.y);
+        ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '12px';
+        ctx.fillText(this.name, this.x, this.y);
     }
 
     getPacketList(): AbstractPacket[] {

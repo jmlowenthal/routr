@@ -1,17 +1,27 @@
+import Drupdatable from "./Drupdatable";
+import { BasicNode } from "./node/BasicNode";
+
+
 export default class Game {
     private iteration = 0;
     private initialTime?: number;
     private time = 0;
 
+    private objects: Drupdatable[] = [];
+
+    constructor() {
+        this.registerObject(new BasicNode(() => {throw new Error()}, "X", 200, 50));
+    }
+
     update(timestamp: number, ctx: CanvasRenderingContext2D, width: number, height: number) {
         this.iteration++;
-        let delta;
+        let dt: number;
         if (this.initialTime === undefined) {
             this.initialTime = timestamp;
-            delta = 0;
+            dt = 0;
             this.time = 0;
         } else {
-            delta = timestamp - this.time;
+            dt = timestamp - this.time;
             this.time = timestamp - this.initialTime;
         }
 
@@ -28,5 +38,16 @@ export default class Game {
         ctx.fillText("Frame " + this.iteration, 60, 120);
         ctx.fillText("Time " + this.time, 60, 150);
         ctx.fillText("Average fps: " + this.iteration / this.time * 1000, 60, 180);
+
+        [...this.objects].forEach(object => object.update(dt, this));
+        this.objects.forEach(object => object.draw(ctx));
+    }
+
+    registerObject(object: Drupdatable) {
+        this.objects.push(object);
+    }
+
+    unregisterObject(object: Drupdatable) {
+        this.objects = this.objects.filter(obj => obj !== object);
     }
 }

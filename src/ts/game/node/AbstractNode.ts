@@ -1,15 +1,18 @@
+import Drupdatable from "../Drupdatable";
 import Link from "../link/Link";
 import { AbstractPacket } from "../packet/AbstractPacket";
 
-export abstract class AbstractNode implements Updatable {
+export abstract class AbstractNode extends Drupdatable {
 
-    public x: number = 0;
-    public y: number = 0;
     public attachedLinks: Link[] = [];
     
     abstract isRoutable(): boolean;
     abstract receivePacket(_: AbstractPacket): void;
     abstract isQueueOverflowed(): boolean;
+
+    constructor(public readonly x: number, public readonly y: number) {
+        super();
+    }
 
     public getRoutableLinks(): Link[] {
         return this.attachedLinks.filter(l => l.getOtherEnd(this).isRoutable());
@@ -48,5 +51,4 @@ export abstract class AbstractNode implements Updatable {
         
         return true;
     }
-
 }
