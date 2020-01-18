@@ -1,8 +1,11 @@
 import { AbstractNode } from './AbstractNode';
 import { Packet } from '../Packet';
 
+const radius = 20;
+
 export class BasicNode extends AbstractNode {
-    private timer: number = 0;
+    private name = "X";
+    /*private timer: number = 0;
     // private listeners: ((_: Packet) => void)[] = [];
     private getDestination: (() => AbstractNode);
     private packetsList: Packet[] = [];
@@ -70,5 +73,17 @@ export class BasicNode extends AbstractNode {
 
     private probability(): number {
         return 0.5;
+    }*/
+
+    draw(ctx: CanvasRenderingContext2D) {
+      ctx.strokeStyle = 'white';
+      ctx.beginPath();
+      ctx.moveTo(this.x + radius, this.y);
+      ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = '12px';
+      ctx.fillText(this.name, this.x, this.y);
     }
 }

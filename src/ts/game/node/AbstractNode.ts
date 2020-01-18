@@ -1,5 +1,7 @@
-export abstract class AbstractNode {
-    x: number = 0;
-    y: number = 0;
-    abstract update(dt: number): void;
+import Drupdatable from "../Drupdatable";
+
+export abstract class AbstractNode extends Drupdatable {
+    constructor(protected x: number, protected y: number) {
+        super();
+    }
 }
