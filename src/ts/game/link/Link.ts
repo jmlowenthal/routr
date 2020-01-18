@@ -6,7 +6,7 @@ import { BasicNode } from "../node/BasicNode";
 
 export default class Link extends Drupdatable {
 
-    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.01;
+    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.000001;
 
     private nodes: [AbstractNode, AbstractNode]; // [0] <----> [1]
     private bandwidth: number = 1;
@@ -20,10 +20,12 @@ export default class Link extends Drupdatable {
         let dx = nodes[0].x - nodes[1].x;
         let dy = nodes[0].y - nodes[1].y;
         this.latency = Math.sqrt(dx * dx + dy * dy) * Link.LENGTH_TIME_MAGIC_FACTOR_OF_PING;
+        nodes[0].attachedLinks.push(this);
+        nodes[1].attachedLinks.push(this);
     }
 
     public trySendPacket(packet: AbstractPacket, from: AbstractNode): boolean {
-        if (this.packets.length > this.bandwidth) {
+        if (this.packets.length >= this.bandwidth) {
             return false;
         }
         if (from == this.nodes[0]) {
@@ -59,7 +61,7 @@ export default class Link extends Drupdatable {
     }
 
     private static progressPacket(dt: number, progress: number): number {
-        let delta = 0;
+        let delta = dt * this.LENGTH_TIME_MAGIC_FACTOR_OF_PING;
         return Math.min(progress + delta, 1)
     }
 
