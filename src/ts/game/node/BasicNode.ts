@@ -54,11 +54,13 @@ export class BasicNode extends AbstractNode {
     }
 
     receivePacket(p: AbstractPacket): void {
-        if (p.isBad()) {
-            this.health = Math.max(this.health - 1, 0);
-        }
-        else if (p.isAntiMalware()) {
-            this.health = Math.min(this.health + 1, BasicNode.MAX_HEALTH);
+        if(p.destination == this){
+          if (p.isBad()) {
+              this.health = Math.max(this.health - 1, 0);
+          }
+          else if (p.isAntiMalware()) {
+              this.health = Math.min(this.health + 1, BasicNode.MAX_HEALTH);
+          }
         }
         else {
             this.packetsList.push(p);
