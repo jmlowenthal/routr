@@ -87,8 +87,8 @@ export class BasicNode extends AbstractNode {
         ctx.stroke();
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.font = '12px';
-        ctx.fillText(this.name, this.x, this.y);
+        ctx.font = '20px sans-serif';
+        ctx.fillText(this.name, this.x, this.y + 2);
         let maxj = Math.floor(this.packetsList.length / BasicNode.MAX_STACK_HEIGHT);
         this.packetsList.forEach((p, i) => {
             let j = Math.floor(i / BasicNode.MAX_STACK_HEIGHT);
