@@ -26,7 +26,7 @@ export abstract class AbstractNode extends Drupdatable {
             return false;
         }
 
-        let queue: [Link, AbstractNode][] = this.getRoutableLinks().map(l => [l, l.getOtherEnd(this)]);
+        let queue: [Link, AbstractNode][] = this.attachedLinks.map(l => [l, l.getOtherEnd(this)]);
         let visited: AbstractNode[] = [];
 
         while (queue.length > 0) {
@@ -39,14 +39,14 @@ export abstract class AbstractNode extends Drupdatable {
                 return firstHop.trySendPacket(p, this);
             }
 
-            getsTo.getRoutableLinks().forEach(l => {
-                if (!visited.includes(l.getOtherEnd(getsTo))) {
-                    queue.push([firstHop, l.getOtherEnd(getsTo)]);
-                }
-            });
-
+            if (getsTo.isRoutable()) {
+                getsTo.attachedLinks.forEach(l => {
+                    if (!visited.includes(l.getOtherEnd(getsTo))) {
+                        queue.push([firstHop, l.getOtherEnd(getsTo)]);
+                    }
+                });
+            }
             visited.push(getsTo);
-
         }        
         
         return false;

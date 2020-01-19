@@ -2,12 +2,13 @@ import InteractionManager from "./InteractionManager";
 import { Icon } from "./Icon";
 import { TOOLBAR_ICON_SIZE } from "../MagicNumber";
 
-export class ToolbarInteractionManager implements InteractionManager {
+export class ToolbarInteractionManager extends InteractionManager {
 
     private tools: [Icon, InteractionManager][];
     private currentToolIndex: number = -1;
 
     constructor(tools: [Icon, InteractionManager][]) {
+        super();
         this.tools = tools;
     }
 
