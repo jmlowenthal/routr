@@ -22,11 +22,16 @@ export default class Game {
         [new Icon('/removeLink.svg'), new LinkInteractionManager(this, link => link.deleteLink(this)), () => true],
         [new Icon('/avast-logo.png'), new AvastInteractionManager(this), () => true],
         [new Icon('/firewall.svg', () => this.getRemainingFirewalls()), new LinkInteractionManager(this, link => {
-                                this.registerObject( link.attachment = 
-                                  new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) );
-                                this.firewallCount++;
-                              }), 
-                              () => this.getRemainingFirewalls() > 0],
+            if (link.attachment) {
+                this.unregisterObject(link.attachment);
+                this.firewallCount--;
+                link.attachment = undefined;
+            } else if (this.getRemainingFirewalls() > 0) {
+                this.registerObject(
+                    link.attachment = new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) );
+                this.firewallCount++;
+            }}), 
+            () => true],
     ]);
     private firstUpdate = true;
     private score = 0;
