@@ -1,6 +1,6 @@
 import InteractionManager from "./InteractionManager";
 import { Icon, SelectionState } from "./Icon";
-import { TOOLBAR_ICON_SIZE } from "../MagicNumber";
+import { TOOLBAR_ICON_SIZE, TOOLBAR_ICON_SPACING } from "../MagicNumber";
 
 export class ToolbarInteractionManager extends InteractionManager {
 
@@ -41,10 +41,13 @@ export class ToolbarInteractionManager extends InteractionManager {
     }
 
     getToolAtPosition(x: number, y: number): number|null {
-        if (x > TOOLBAR_ICON_SIZE || y > TOOLBAR_ICON_SIZE * this.tools.length) {
+        if (x > TOOLBAR_ICON_SIZE || y > (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) * this.tools.length) {
             return null;
         }
-        return Math.floor(y / TOOLBAR_ICON_SIZE);
+        if (y % (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) < TOOLBAR_ICON_SPACING) {
+            return null;
+        }
+        return Math.floor(y / (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING));
     }
 
     draw(ctx: CanvasRenderingContext2D) {
@@ -65,7 +68,7 @@ export class ToolbarInteractionManager extends InteractionManager {
                     state = SelectionState.UNSELECTED;
                 }
             }
-            t[0].draw(ctx, i, TOOLBAR_ICON_SIZE * i, TOOLBAR_ICON_SIZE, TOOLBAR_ICON_SIZE, state);
+            t[0].draw(ctx, 0, TOOLBAR_ICON_SIZE * i + TOOLBAR_ICON_SPACING * (i + 1), TOOLBAR_ICON_SIZE, TOOLBAR_ICON_SIZE, state);
         })
     }
 
