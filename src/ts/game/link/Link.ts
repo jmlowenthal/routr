@@ -6,7 +6,7 @@ import { BasicNode } from "../node/BasicNode";
 
 export default class Link extends Drupdatable {
 
-    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.015;
+    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.3;
 
     private nodes: [AbstractNode, AbstractNode]; // [0] <----> [1]
     private bandwidth: number = 1;

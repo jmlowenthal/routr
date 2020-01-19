@@ -3,13 +3,14 @@ import { AbstractPacket } from '../packet/AbstractPacket';
 import { BasicPacket } from '../packet/BasicPacket';
 import { BoundingBox } from '../types';
 import { BadPacket } from '../packet/BadPacket';
+import { Exp } from '../Statistics';
 
 export class BasicNode extends AbstractNode {
 
     public static readonly RADIUS: number = 20;
-    public static readonly MAX_HEALTH: number = 3;
+    public static readonly MAX_HEALTH: number = 5;
     public static readonly MAX_QUEUE_LENGTH: number = 20;
-    public static readonly MAX_PACKET_DELAY: number = 10;
+    public static readonly PACKET_DELAY_GAMMA: number = 1500;
     public static readonly MAX_STACK_HEIGHT: number = 5;
     public static readonly BAD_GENERATION_RATIO: number = 0.5;
 
@@ -29,7 +30,7 @@ export class BasicNode extends AbstractNode {
         //generate packets
         this.timer += dt;
         if (this.health > 0) {
-            if (Math.random() < this.probability()) {
+            if (Math.random() < Exp(BasicNode.PACKET_DELAY_GAMMA, this.timer - dt, this.timer)) {
                 this.timer = 0;
                 var dest = this.generateDestination(this);
                 if (dest) {
@@ -39,7 +40,7 @@ export class BasicNode extends AbstractNode {
             }
         }
         else {
-            if (Math.random() < this.probability() * BasicNode.BAD_GENERATION_RATIO) {
+            if (Math.random() < Exp(BasicNode.PACKET_DELAY_GAMMA, this.timer - dt, this.timer) * BasicNode.BAD_GENERATION_RATIO) {
                 this.timer = 0;
                 var dest = this.generateDestination(this);
                 if (dest) {
@@ -63,11 +64,6 @@ export class BasicNode extends AbstractNode {
         
         this.attachedLinks.sort((x, y) => 0.5 - Math.random());
         this.packetsList.sort((x, y) => x.isBad() ? -1 : (y.isBad() ? 1 : 0));
-    }
-
-    private probability(): number {
-        // return Math.exp(this.timer - BasicNode.MAX_PACKET_DELAY);
-        return 0.01;
     }
 
     isRoutable(): boolean {
