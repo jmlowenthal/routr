@@ -32,9 +32,11 @@ export class GameContainer extends React.Component<GameProps, {gameRunning: bool
         } else {
             return (
                 <div className="GameOver">
-                    Game Over. You scored {this.state.score}!
+                    <h1>Game Over</h1>
+                    <span>You scored</span>
+                    <h2>{this.state.score}</h2>
                     <div className="GameOver-retry">
-                        <button onClick={this.retry.bind(this)}>Try again</button>
+                        <button onClick={this.retry.bind(this)}><b>TRY AGAIN</b></button>
                     </div>
                 </div>
             )

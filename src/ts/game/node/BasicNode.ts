@@ -5,7 +5,7 @@ import { BoundingBox } from '../types';
 import { BadPacket } from '../packet/BadPacket';
 import { Exp } from '../Statistics';
 import Link from '../link/Link';
-import { NODE_MAX_HEALTH, PACKET_SPAWN_GAMMA, INFECTED_SPAWN_PENALTY, MAX_QUEUE_LENGTH, NODE_RADIUS, NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH } from '../MagicNumber';
+import { NODE_MAX_HEALTH, PACKET_SPAWN_GAMMA, INFECTED_SPAWN_PENALTY, MAX_QUEUE_LENGTH, NODE_RADIUS, NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH, REGENERATION_PER_MILLI } from '../MagicNumber';
 
 export class BasicNode extends AbstractNode {
 
@@ -44,7 +44,9 @@ export class BasicNode extends AbstractNode {
                     this.packetsList.shift();
                     this.packetsList.push(head);
                 }
-            }    
+            }
+            
+            this.setHealth(this.getHealth() + dt * REGENERATION_PER_MILLI);
         }
         else {
             if (Math.random() < Exp(PACKET_SPAWN_GAMMA, this.timer - dt, this.timer) * INFECTED_SPAWN_PENALTY) {
