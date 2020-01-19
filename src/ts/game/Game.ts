@@ -68,9 +68,11 @@ export default class Game {
                 .forEach(object => object.draw(ctx));
         this.interactionManager.draw(ctx);
 
-        if (this.objects.some(o => o.gameOver())) {
+        if (this.objects.some(o => o.gameOver()) || !this.objects.some(o => o instanceof BasicNode && o.getHealth() > 0)) {
             this.gameOverCallback(this.score);
         }
+
+        this.objects.sort((a, b) => 0.5 - Math.random());
     }
 
     registerObject(object: Drupdatable) {
