@@ -6,7 +6,7 @@ import { INFECTION_TIMESTEP, NODE_CREATION_RATE_PARAM, MIN_DISTANCE_BETWEEN_OBJE
 
 export default class GameMutator extends Drupdatable {
 
-    private nodeNames = "DEFGHIJKLMNOPQRSTUVWZYZ".split("");
+    private nodeNames = "ABCDEFGHIJKLMNOPQRSTUVWZYZ".split("");
     private timeSinceLastNodeCreation = 0;
     private width = 0;
     private height = 0;
@@ -22,17 +22,7 @@ export default class GameMutator extends Drupdatable {
 
         if (Math.random() < this.probability() * (dt / 1000) && this.nodeNames.length > 0) {
             this.timeSinceLastNodeCreation = 0;
-            let nodeName = this.nodeNames[0];
-            this.nodeNames = this.nodeNames.slice(1);
-            let newNode: BasicNode;
-            
-            do {
-                let x = Math.floor(Math.random() * (this.width - 60)) + 30;
-                let y = Math.floor(Math.random() * (this.height - 60)) + 30;
-                newNode = new BasicNode(this.generateDestination, nodeName, x, y);
-            } while (game.getObjects().some(this.newNodeTooClose(newNode)));
-
-            game.registerObject(newNode);
+            this.generateNewNode(game);
         }
 
         if (Math.floor((this.time - dt) / INFECTION_TIMESTEP) !== Math.floor(this.time / INFECTION_TIMESTEP)) {
@@ -41,6 +31,29 @@ export default class GameMutator extends Drupdatable {
             nodes[Math.floor(Math.random() * nodes.length)].setHealth(0);
         }
     }
+
+    generateInitialNodes(game: Game) {
+        this.generateNewNode(game);
+        this.generateNewNode(game);
+        this.generateNewNode(game);
+    }
+
+    private generateNewNode(game: Game) {
+        let nodeName = this.nodeNames[0];
+        this.nodeNames = this.nodeNames.slice(1);
+        let newNode: BasicNode;
+        
+        do {
+            console.log(this.width, this.height);
+            let x = Math.floor(Math.random() * (this.width - 60)) + 30;
+            let y = Math.floor(Math.random() * (this.height - 60)) + 30;
+            newNode = new BasicNode(this.generateDestination, nodeName, x, y);
+            console.log(game.getObjects());
+        } while (game.getObjects().some(this.newNodeTooClose(newNode)));
+
+        game.registerObject(newNode);
+    }
+
 
     private probability(): number {
         return Math.exp(this.timeSinceLastNodeCreation - NODE_CREATION_RATE_PARAM);
