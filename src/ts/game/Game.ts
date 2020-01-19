@@ -8,13 +8,15 @@ import { AvastNode } from "./node/AvastNode";
 import Link from "./link/Link";
 import { ToolbarInteractionManager } from "./interaction/ToolbarInteractionManager";
 import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
+import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
 
 
 export default class Game {
     private prevTime?: number = 0;
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new ToolbarInteractionManager([
-        [new CreateLinkIcon(), new CreateLinkInteractionManager(this)]
+        [new CreateLinkIcon(), new CreateLinkInteractionManager(this)],
+        [new CreateLinkIcon(), new AvastInteractionManager(this)]
     ]);
     private firstUpdate = true;
 
