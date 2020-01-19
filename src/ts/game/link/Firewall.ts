@@ -15,7 +15,8 @@ export class Firewall extends AbstractAttachment {
     x_dir /= len_dir;
     y_dir /= len_dir;
 
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "#FF7800";
     ctx.beginPath();
     ctx.moveTo(this.pos[0] - x_dir, this.pos[1] - y_dir);
     ctx.lineTo(this.pos[0] + x_dir, this.pos[1] + y_dir);

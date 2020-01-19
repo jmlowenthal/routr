@@ -36,8 +36,8 @@ export class ToolbarInteractionManager extends InteractionManager {
     }
 
     getToolAtPosition(pos: Position): number|null {
-        let y = pos.y - ToolbarInteractionManager.ToolbarOffsetTop;
-        if (pos.x > TOOLBAR_ICON_SIZE || y > (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) * this.tools.length) {
+        let y = pos.y - ToolbarInteractionManager.ToolbarOffsetTop - (2 * TOOLBAR_ICON_SPACING);
+        if (y < 0 || pos.x > TOOLBAR_ICON_SIZE || y > (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) * this.tools.length) {
             return null;
         }
         if (y % (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) < TOOLBAR_ICON_SPACING) {
