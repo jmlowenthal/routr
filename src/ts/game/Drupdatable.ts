@@ -3,6 +3,9 @@ import Game from "./Game";
 export default abstract class Drupdatable {
     update(dt: number, game: Game) { }
     draw(ctx: CanvasRenderingContext2D) { }
+    zIndex(): number|undefined {
+        return undefined;
+    }
     getBoundingBox(): [number, number, number, number] {
         return [-1, -1, -1, -1];
     }

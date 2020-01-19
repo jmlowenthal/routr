@@ -92,13 +92,6 @@ export default class Link extends Drupdatable {
         let dx = x0 - x1, dy = y0 - y1;
         let len = Math.sqrt(dx * dx + dy * dy);
         ctx.lineWidth = 2;
-        if (!this.nodes[0].isRoutable() || !this.nodes[1].isRoutable()) {
-            ctx.setLineDash([10, 10]);
-        }
-        dx = dx / len * BasicNode.RADIUS;
-        dy = dy / len * BasicNode.RADIUS;
-        x0 -= dx; y0 -= dy;
-        x1 += dx; y1 += dy;
         ctx.beginPath();
         ctx.moveTo(x0, y0);
         ctx.lineTo(x1, y1);
@@ -113,5 +106,9 @@ export default class Link extends Drupdatable {
         });
 
         ctx.fillStyle = "white";
+    }
+
+    zIndex() {
+        return 20;
     }
 }
