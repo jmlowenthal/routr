@@ -18,7 +18,7 @@ export class AvastNode extends AbstractNode {
     }
     update(dt: number, game: Game): void {
         this.timer += dt;
-        if (this.timer >= AVAST_DELAY && !this.isQueueFull()) {
+        if (this.timer >= AVAST_DELAY/game.nodeCount && !this.isQueueFull()) {
             this.timer = 0;
             this.packetsList.push(new AntiMalwarePacket(this, this));
         }

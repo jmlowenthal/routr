@@ -9,7 +9,7 @@ export const MAX_QUEUE_LENGTH: number = 25;
 export const PACKET_SPAWN_GAMMA: number = 2000;
 export const NODE_PACKET_LAYOUT_HEIGHT: number = 5;
 export const INFECTED_SPAWN_PENALTY: number = 5;
-export const REGENERATION_PER_MILLI: number = 0.0001;
+export const REGENERATION_PER_MILLI: number = 0.000025;
 
 export const NODES_PER_FIREWALL: number = 3;
 export const LINKS_PER_NODE = 1.8;
@@ -26,4 +26,4 @@ export const TOOLBAR_OVERALL_WIDTH: number = 125;
 
 export const LINK_DELETION_RANGE = 15;
 
-export const AVAST_DELAY = 30000;
+export const AVAST_DELAY = 200000;
