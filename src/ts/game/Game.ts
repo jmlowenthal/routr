@@ -4,6 +4,7 @@ import GameMutator from "./GameMutator";
 import { AbstractNode } from "./node/AbstractNode";
 import InteractionManager from "./interaction/InteractionManager";
 import DefaultInteractionManager from "./interaction/DefaultInteractionManager";
+import Link from "./link/Link";
 
 
 export default class Game {
@@ -19,12 +20,24 @@ export default class Game {
                 .filter(o => o instanceof BasicNode)
                 .sort((x, y) => 0.5 - Math.random())
                 [0] as AbstractNode;
-        this.registerObject(new BasicNode(generateDestination, "A", 200, 50));
-        this.registerObject(new BasicNode(generateDestination, "B", 600, 50));
-        this.registerObject(new BasicNode(generateDestination, "C", 400, 150));
+        let A = new BasicNode(generateDestination, "A", 200, 100);
+        let B = new BasicNode(generateDestination, "B", 500, 150);
+        let C = new BasicNode(generateDestination, "C", 400, 250);
+        let D = new BasicNode(generateDestination, "D", 300, 500);
+        let E = new BasicNode(generateDestination, "E", 450, 300);
+        this.registerObject(A);
+        this.registerObject(B);
+        this.registerObject(C);
+        this.registerObject(D);
+        this.registerObject(E);
+        this.registerObject(new Link([A, B]));
+        this.registerObject(new Link([A, C]));
+        this.registerObject(new Link([D, C]));
+        this.registerObject(new Link([E, C]));
+        this.registerObject(new Link([E, B]));
 
         this.gameMutator = new GameMutator(generateDestination);
-        this.registerObject(this.gameMutator);
+        // this.registerObject(this.gameMutator);
     }
 
     update(timestamp: number, ctx: CanvasRenderingContext2D, width: number, height: number) {
@@ -41,9 +54,11 @@ export default class Game {
         this.gameMutator.setScreenDimensions(width, height);
         ctx.clearRect(0, 0, width, height);
         ctx.fillStyle = 'white';
+        ctx.strokeStyle = 'white';
 
         [...this.objects].forEach(object => object.update(dt, this));
         this.objects.forEach(object => object.draw(ctx));
+        this.objects = this.objects.sort((x, y) => 0.5 - Math.random());
     }
 
     registerObject(object: Drupdatable) {
