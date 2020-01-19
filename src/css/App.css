@@ -45,7 +45,7 @@
   margin: 35px;
 }
 
-.GameOver-retry button {
+button {
   background-color: #20335b;
   padding: 10px 20px;
   border-radius: 5px;
@@ -53,4 +53,28 @@
   cursor: pointer;
   color: white;
   font-size: 0.8em;
+}
+
+.Tutorial-contents {
+  margin: 10px 60px;
+}
+
+.Tutorial-key li {
+  list-style: none outside none;
+}
+
+.Tutorial-key li img {
+  height: 1em;
+}
+
+.Tutorial-header {
+  font-size: 2em;
+  line-height: 3em;
+  flex-grow: 0;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.Tutorial-header h1 {
+  margin: 0;
 }
