@@ -96,11 +96,10 @@ export default class Link extends Drupdatable {
         ctx.stroke();
         ctx.setLineDash([]);
         this.packets.forEach(p => {
-            ctx.fillStyle = p[0].isBad() ? "red" : "white";
             let l = p[2] ? p[1] : 1 - p[1];
             let x = x0 * (1 - l) + x1 * l - PACKET_WIDTH / 2;
             let y = y0 * (1 - l) + y1 * l - PACKET_WIDTH / 2;
-            ctx.fillRect(x, y, PACKET_WIDTH, PACKET_WIDTH);
+            p[0].draw(ctx, x, y);
         });
 
         ctx.fillStyle = "white";
