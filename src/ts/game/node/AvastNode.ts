@@ -61,4 +61,16 @@ export class AvastNode extends AbstractNode {
         return [this.x - this.img.width / 2, this.y - this.img.height / 2,
                 this.x + this.img.width / 2, this.y + this.img.height / 2];
     }
+
+    releasePacket(target: AbstractNode): boolean {
+        if (this.packetsList.length > 0) {
+            let p = this.packetsList[0];
+            p.destination = target;
+            if (this.route(p)) {
+                this.packetsList.shift();
+                return true;
+            }
+        }
+        return false;
+    }
 }
