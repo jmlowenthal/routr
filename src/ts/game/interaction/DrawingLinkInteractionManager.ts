@@ -25,4 +25,12 @@ export default class DrawingLinkInteractionManager extends InteractionManager {
     private isAttached(a: AbstractNode, b: AbstractNode): boolean {
         return a.attachedLinks.some(link => link.getNodes().indexOf(b) !== -1);
     }
+
+    handleMouseMove(x: number, y: number) {
+        return this;
+    }
+
+    handleMouseOut() {
+        return this;
+    }
 }

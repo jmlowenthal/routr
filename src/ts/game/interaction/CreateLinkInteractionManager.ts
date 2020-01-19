@@ -19,4 +19,12 @@ export default class CreateLinkInteractionManager extends InteractionManager {
 
         return this;
     }
+
+    handleMouseMove(x: number, y: number) {
+        return this;
+    }
+
+    handleMouseOut() {
+        return this;
+    }
 }

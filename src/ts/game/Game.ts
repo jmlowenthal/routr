@@ -72,7 +72,7 @@ export default class Game {
         return this.objects;
     }
 
-    handleClick(x: number, y: number) {
-        this.interactionManager = this.interactionManager.handleClick(x, y);
+    withInteractionManager(fn: (im: InteractionManager) => InteractionManager) {
+        this.interactionManager = fn(this.interactionManager);
     }
 }

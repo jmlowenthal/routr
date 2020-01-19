@@ -5,6 +5,7 @@ export class GameContainer extends React.Component<GameProps> {
     private game: Game;
     private animationFrame?: number;
     private animationCallback = (ts: number) => {};
+    private mouseIsOver: boolean = false;
 
     constructor(props: GameProps) {
         super(props);
@@ -16,7 +17,9 @@ export class GameContainer extends React.Component<GameProps> {
     render() {
         return (
             <div>
-                <canvas ref="canvas" width={this.props.width} height={this.props.height} onClick={this.handleClick.bind(this)}>
+                <canvas ref="canvas" width={this.props.width} height={this.props.height} 
+                        onClick={this.handleClick.bind(this)} onMouseMove={this.handleMouseMove.bind(this)}
+                        onMouseOut={this.handleMouseOut.bind(this)}>
                     Your browser doesn't support this functionality
                 </canvas>
                 <div className="hidden">
@@ -31,7 +34,17 @@ export class GameContainer extends React.Component<GameProps> {
     }
 
     handleClick(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-        this.game.handleClick(e.clientX - this.getCanvas().offsetLeft, e.clientY - this.getCanvas().offsetTop);
+        this.game.withInteractionManager(im => im.handleClick(
+            e.clientX - this.getCanvas().offsetLeft, e.clientY - this.getCanvas().offsetTop));
+    }
+
+    handleMouseMove(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+        this.game.withInteractionManager(im => im.handleMouseMove(
+            e.clientX - this.getCanvas().offsetLeft, e.clientY - this.getCanvas().offsetTop));
+    }
+
+    handleMouseOut(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+        this.game.withInteractionManager(im => im.handleMouseOut());
     }
 
     update() {
