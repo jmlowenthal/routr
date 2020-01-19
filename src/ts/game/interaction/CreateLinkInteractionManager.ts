@@ -2,14 +2,15 @@ import InteractionManager from "./InteractionManager";
 import Game from "../Game";
 import { AbstractNode } from "../node/AbstractNode";
 import DrawingLinkInteractionManager from "./DrawingLinkInteractionManager";
+import { Position } from "../types";
 
 export default class CreateLinkInteractionManager extends InteractionManager {
     constructor(private game: Game) {
         super();
     }
 
-    handleClick(x: number, y: number): InteractionManager {
-        let clickedObjects = this.game.getObjects().filter(object => object.inside(x, y));
+    handleClick(pos: Position): InteractionManager {
+        let clickedObjects = this.game.getObjects().filter(object => object.inside(pos));
 
         for (let object of clickedObjects) {
             if (object instanceof AbstractNode) {
@@ -17,14 +18,6 @@ export default class CreateLinkInteractionManager extends InteractionManager {
             }
         }
 
-        return this;
-    }
-
-    handleMouseMove(x: number, y: number) {
-        return this;
-    }
-
-    handleMouseOut() {
         return this;
     }
 }

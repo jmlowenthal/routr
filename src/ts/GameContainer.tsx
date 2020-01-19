@@ -34,17 +34,21 @@ export class GameContainer extends React.Component<GameProps> {
     }
 
     handleClick(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-        this.game.withInteractionManager(im => im.handleClick(
-            e.clientX - this.getCanvas().offsetLeft, e.clientY - this.getCanvas().offsetTop));
+        this.game.withInteractionManager(im => im.handleClick({
+            x: e.clientX - this.getCanvas().offsetLeft,
+            y: e.clientY - this.getCanvas().offsetTop,
+        }));
     }
 
     handleMouseMove(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-        this.game.withInteractionManager(im => im.handleMouseMove(
-            e.clientX - this.getCanvas().offsetLeft, e.clientY - this.getCanvas().offsetTop));
+        this.game.withInteractionManager(im => im.handleMouseMove({
+            x: e.clientX - this.getCanvas().offsetLeft,
+            y: e.clientY - this.getCanvas().offsetTop
+        }));
     }
 
     handleMouseOut(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
-        this.game.withInteractionManager(im => im.handleMouseOut());
+        this.game.withInteractionManager(im => im.handleMouseMove(undefined));
     }
 
     update() {
