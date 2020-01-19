@@ -15,7 +15,7 @@ export default class Game {
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new DefaultInteractionManager(this);
 
-    public static readonly INFECTION_TIMESTEP: number = 30_000; //ms
+    public static readonly INFECTION_TIMESTEP: number = 60_000; //ms
 
     private objects: Drupdatable[] = [];
 
