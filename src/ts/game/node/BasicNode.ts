@@ -92,21 +92,28 @@ export class BasicNode extends AbstractNode {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        ctx.lineWidth = 6 * (this.health / NODE_MAX_HEALTH) + 4;
+        ctx.lineWidth = 3;
         ctx.fillStyle = this.health > 0 ? 'white' : 'red';
         ctx.strokeStyle = this.health > 0 ? 'white' : 'red';
         ctx.beginPath();
         ctx.moveTo(this.x + NODE_RADIUS, this.y);
         ctx.arc(this.x, this.y, NODE_RADIUS, 0, 2 * Math.PI);
-        ctx.stroke();
         ctx.fillStyle = '#282C34';
         ctx.fill();
+        ctx.stroke();
         ctx.fillStyle = this.health > 0 ? 'white' : 'red';
         ctx.strokeStyle = this.health > 0 ? 'white' : 'red';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.font = 'bold 20px sans-serif';
         ctx.fillText(this.name, this.x, this.y + 2);
+        if (this.health < NODE_MAX_HEALTH && this.health > 0) {
+            ctx.strokeStyle = 'red';
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - NODE_RADIUS);
+            ctx.arc(this.x, this.y, NODE_RADIUS, 1.5 * Math.PI, (2 * Math.PI * (1 - (this.health / NODE_MAX_HEALTH)) - (0.5 * Math.PI)));
+            ctx.stroke();
+        }
         let maxj = Math.floor((this.packetsList.length - 1) / NODE_PACKET_LAYOUT_HEIGHT);
         this.packetsList.forEach((p, i) => {
             ctx.fillStyle = p.isBad() ? "red" : "white";
