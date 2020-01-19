@@ -34,6 +34,9 @@ export default class Game {
         this.registerObject(new Link([D, C]));
         this.registerObject(new Link([E, C]));
         this.registerObject(new Link([E, B]));
+        let avastNode = new AvastNode(650, 200);
+        this.registerObject(avastNode);
+        this.registerObject(new Link([avastNode, B]));
 
         this.gameMutator = new GameMutator(generateDestination);
         // this.registerObject(this.gameMutator);

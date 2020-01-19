@@ -35,7 +35,7 @@ export abstract class AbstractNode extends Drupdatable {
 
             let firstHop = curr[0];
             let getsTo = curr[1];
-            if (getsTo == p.destination) {
+            if (getsTo === p.destination) {
                 return firstHop.trySendPacket(p, this);
             }
 

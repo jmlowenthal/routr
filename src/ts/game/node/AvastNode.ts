@@ -4,6 +4,12 @@ import { AbstractPacket } from '../packet/AbstractPacket';
 import { BasicNode } from './BasicNode';
 
 export class AvastNode extends AbstractNode {
+    private img: HTMLImageElement;
+    constructor(x: number, y: number) {
+        super(x,y);
+        this.img = new Image();
+        this.img.src = "/avast-logo.png";
+    }
     update(dt: number, game: Game): void {
         // throw new Error("Method not implemented.");
     }
@@ -21,9 +27,6 @@ export class AvastNode extends AbstractNode {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        let img = new Image(BasicNode.RADIUS * 2, BasicNode.RADIUS * 2);
-        img.src = "/avast-logo.png";
-        img.width = 10;
-        ctx.drawImage(img, 30, 30);
+        ctx.drawImage(this.img, this.x - 25, this.y - 25);
     }
 }

@@ -61,7 +61,7 @@ export class BasicNode extends AbstractNode {
     }
 
     receivePacket(p: AbstractPacket): void {
-        if(p.destination == this){
+        if(p.destination === this){
           if (p.isBad()) {
               this.health = Math.max(this.health - 1, 0);
           }
