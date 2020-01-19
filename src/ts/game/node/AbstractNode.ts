@@ -5,6 +5,8 @@ import { AbstractPacket } from "../packet/AbstractPacket";
 export abstract class AbstractNode extends Drupdatable {
 
     public attachedLinks: Link[] = [];
+
+    private scoreThisFrame = 0;
     
     abstract isRoutable(): boolean;
     abstract receivePacket(_: AbstractPacket): void;
@@ -54,5 +56,19 @@ export abstract class AbstractNode extends Drupdatable {
 
     zIndex() {
         return 50;
+    }
+
+    gameOver() {
+        return this.isQueueOverflowed();
+    }
+
+    addOneToScore() {
+        this.scoreThisFrame++;
+    }
+
+    scoreUpdate() {
+        let result = this.scoreThisFrame;
+        this.scoreThisFrame = 0;
+        return result;
     }
 }

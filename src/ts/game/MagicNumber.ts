@@ -5,7 +5,7 @@ export const INFECTION_TIMESTEP: number = 60_000; //ms
 
 export const NODE_RADIUS: number = 20;
 export const NODE_MAX_HEALTH: number = 10;
-export const MAX_QUEUE_LENGTH: number = 20;
+export const MAX_QUEUE_LENGTH: number = 2;
 export const PACKET_SPAWN_GAMMA: number = 1500;
 export const NODE_PACKET_LAYOUT_HEIGHT: number = 5;
 export const INFECTED_SPAWN_PENALTY: number = 0.5;

@@ -33,3 +33,22 @@
 .hidden {
   display: none;
 }
+
+.GameOver {
+  font-size: 1.7em;
+  text-align: center;
+  margin: 25px;
+}
+
+.GameOver-retry {
+  text-align: center;
+  margin: 35px;
+}
+
+.GameOver-retry a {
+  background-color: #20335b;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #0b1939;
+  cursor: pointer;
+}

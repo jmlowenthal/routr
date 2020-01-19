@@ -22,10 +22,11 @@ export default class Game {
                                 new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) ))],
     ]);
     private firstUpdate = true;
+    private score = 0;
 
     private objects: Drupdatable[] = [];
 
-    constructor() {
+    constructor(private gameOverCallback: (score: number) => void) {
         let generateDestination = () => this.objects
                 .filter(o => o instanceof BasicNode)
                 .sort((x, y) => 0.5 - Math.random())
@@ -55,12 +56,19 @@ export default class Game {
         ctx.fillStyle = 'white';
         ctx.strokeStyle = 'white';
 
-        [...this.objects].forEach(object => object.update(dt, this));
+        [...this.objects].forEach(object => {
+            object.update(dt, this);
+            this.score += object.scoreUpdate();
+        });
         this.objects
                 .filter(obj => obj.zIndex() !== undefined)
                 .sort((a, b) => a.zIndex()! - b.zIndex()!)
                 .forEach(object => object.draw(ctx));
         this.interactionManager.draw(ctx);
+
+        if (this.objects.some(o => o.gameOver())) {
+            this.gameOverCallback(this.score);
+        }
     }
 
     registerObject(object: Drupdatable) {

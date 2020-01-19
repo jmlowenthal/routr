@@ -15,4 +15,10 @@ export default abstract class Drupdatable {
         return boundingBox[0] <= pos.x && pos.x <= boundingBox[2] &&
             boundingBox[1] <= pos.y && pos.y <= boundingBox[3];
     }
+    scoreUpdate(): number {
+        return 0;
+    }
+    gameOver(): boolean {
+        return false;
+    }
 }

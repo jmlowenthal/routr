@@ -1,7 +1,7 @@
 import React from 'react';
 import Game from './game/Game';
 
-export class GameContainer extends React.Component<GameProps> {
+export class GameContainer extends React.Component<GameProps, {gameRunning: boolean, score: number}> {
     private game: Game;
     private animationFrame?: number;
     private animationCallback = (ts: number) => {};
@@ -11,19 +11,34 @@ export class GameContainer extends React.Component<GameProps> {
         super(props);
 
         this.update = this.update.bind(this);
-        this.game = new Game();
+        this.state = {
+            gameRunning: true,
+            score: 0,
+        };
+        this.game = new Game(this.gameOver.bind(this));
     }
 
     render() {
-        return (
-            <div>
-                <canvas ref="canvas" width={this.props.width} height={this.props.height} 
-                        onClick={this.handleClick.bind(this)} onMouseMove={this.handleMouseMove.bind(this)}
-                        onMouseOut={this.handleMouseOut.bind(this)}>
-                    Your browser doesn't support this functionality
-                </canvas>
-            </div>
-        );
+        if (this.state.gameRunning) {
+            return (
+                <div>
+                    <canvas ref="canvas" width={this.props.width} height={this.props.height} 
+                            onClick={this.handleClick.bind(this)} onMouseMove={this.handleMouseMove.bind(this)}
+                            onMouseOut={this.handleMouseOut.bind(this)}>
+                        Your browser doesn't support this functionality
+                    </canvas>
+                </div>
+            );
+        } else {
+            return (
+                <div className="GameOver">
+                    Game Over. You scored {this.state.score}!
+                    <div className="GameOver-retry">
+                        <a onClick={() => this.setState({gameRunning: true})}>Try again</a>
+                    </div>
+                </div>
+            )
+        }
     }
 
     getCanvas(): HTMLCanvasElement {
@@ -49,21 +64,24 @@ export class GameContainer extends React.Component<GameProps> {
     }
 
     update() {
-        const canvas = this.refs.canvas as HTMLCanvasElement;
-        const ctx = canvas.getContext("2d")!;
-        //const img = this.refs.image;
-        const width = this.props.width;
-        const height = this.props.height;
+        if (this.state.gameRunning) {
+            const canvas = this.refs.canvas as HTMLCanvasElement;
+            const ctx = canvas.getContext("2d")!;
+            const width = this.props.width;
+            const height = this.props.height;
 
-        if (this.animationFrame !== undefined) {
-            cancelAnimationFrame(this.animationFrame);
-        }
+            if (this.animationFrame !== undefined) {
+                cancelAnimationFrame(this.animationFrame);
+            }
 
-        this.animationCallback = timestamp => {
-            this.game.update(timestamp, ctx, width, height);
+            this.animationCallback = timestamp => {
+                this.game.update(timestamp, ctx, width, height);
+                if (this.state.gameRunning) {
+                    this.animationFrame = requestAnimationFrame(this.animationCallback);
+                }
+            }
             this.animationFrame = requestAnimationFrame(this.animationCallback);
         }
-        this.animationFrame = requestAnimationFrame(this.animationCallback);
     }
 
     componentDidMount() {
@@ -74,8 +92,11 @@ export class GameContainer extends React.Component<GameProps> {
         this.update();
     }
 
-    getResources() {
-        //return this.refs.
+    gameOver(score: number) {
+        this.setState({
+            gameRunning: false,
+            score: score,
+        });
     }
 }
 

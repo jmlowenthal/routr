@@ -1,5 +1,4 @@
 import { AbstractPacket } from "../packet/AbstractPacket";
-import Drupdatable from "../Drupdatable";
 import { BadPacket } from "../packet/BadPacket";
 import { AbstractAttachment } from "./AbstractAttachment"
 
