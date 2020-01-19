@@ -6,4 +6,9 @@ export default abstract class Drupdatable {
     getBoundingBox(): [number, number, number, number] {
         return [-1, -1, -1, -1];
     }
+    inside(x: number, y: number): boolean {
+        let boundingBox = this.getBoundingBox();
+        return boundingBox[0] <= x && x <= boundingBox[2] &&
+            boundingBox[1] <= y && y <= boundingBox[3];
+    }
 }

@@ -2,13 +2,15 @@ import Drupdatable from "./Drupdatable";
 import { BasicNode } from "./node/BasicNode";
 import GameMutator from "./GameMutator";
 import { AbstractNode } from "./node/AbstractNode";
+import InteractionManager from "./interaction/InteractionManager";
+import DefaultInteractionManager from "./interaction/DefaultInteractionManager";
 
 
 export default class Game {
-    private iteration = 0;
     private initialTime?: number;
     private time = 0;
     private gameMutator: GameMutator;
+    private interactionManager: InteractionManager = new DefaultInteractionManager(this);
 
     private objects: Drupdatable[] = [];
 
@@ -26,7 +28,6 @@ export default class Game {
     }
 
     update(timestamp: number, ctx: CanvasRenderingContext2D, width: number, height: number) {
-        this.iteration++;
         let dt: number;
         if (this.initialTime === undefined) {
             this.initialTime = timestamp;
@@ -55,5 +56,9 @@ export default class Game {
 
     getObjects(): Drupdatable[] {
         return this.objects;
+    }
+
+    handleClick(x: number, y: number) {
+        this.interactionManager = this.interactionManager.handleClick(x, y);
     }
 }

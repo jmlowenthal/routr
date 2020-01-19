@@ -16,7 +16,7 @@ export class GameContainer extends React.Component<GameProps> {
     render() {
         return (
             <div>
-                <canvas ref="canvas" width={this.props.width} height={this.props.height}>
+                <canvas ref="canvas" width={this.props.width} height={this.props.height} onClick={this.handleClick.bind(this)}>
                     Your browser doesn't support this functionality
                 </canvas>
                 <div className="hidden">
@@ -24,6 +24,14 @@ export class GameContainer extends React.Component<GameProps> {
                 </div>
             </div>
         );
+    }
+
+    getCanvas(): HTMLCanvasElement {
+        return this.refs.canvas as HTMLCanvasElement;
+    }
+
+    handleClick(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) {
+        this.game.handleClick(e.clientX - this.getCanvas().offsetLeft, e.clientY - this.getCanvas().offsetTop);
     }
 
     update() {
