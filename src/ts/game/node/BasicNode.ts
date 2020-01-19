@@ -104,6 +104,10 @@ export class BasicNode extends AbstractNode {
         ctx.moveTo(this.x + BasicNode.RADIUS, this.y);
         ctx.arc(this.x, this.y, BasicNode.RADIUS, 0, 2 * Math.PI);
         ctx.stroke();
+        ctx.fillStyle = '#282C34';
+        ctx.fill();
+        ctx.fillStyle = this.health > 0 ? 'white' : 'red';
+        ctx.strokeStyle = this.health > 0 ? 'white' : 'red';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.font = 'bold 20px sans-serif';
