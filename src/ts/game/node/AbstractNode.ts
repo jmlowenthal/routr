@@ -51,4 +51,8 @@ export abstract class AbstractNode extends Drupdatable {
         
         return false;
     }
+
+    zIndex() {
+        return 50;
+    }
 }

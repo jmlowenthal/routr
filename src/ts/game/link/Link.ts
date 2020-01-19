@@ -111,4 +111,8 @@ export default class Link extends Drupdatable {
 
         ctx.fillStyle = "white";
     }
+
+    zIndex() {
+        return 20;
+    }
 }

@@ -61,8 +61,10 @@ export default class Game {
         ctx.strokeStyle = 'white';
 
         [...this.objects].forEach(object => object.update(dt, this));
-        this.objects.forEach(object => object.draw(ctx));
-        this.objects = this.objects.sort((x, y) => 0.5 - Math.random());
+        this.objects
+                .filter(obj => obj.zIndex() !== undefined)
+                .sort((a, b) => a.zIndex()! - b.zIndex()!)
+                .forEach(object => object.draw(ctx));
     }
 
     registerObject(object: Drupdatable) {
