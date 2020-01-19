@@ -8,7 +8,6 @@ import { ToolbarInteractionManager } from "./interaction/ToolbarInteractionManag
 import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
 import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
 import LinkInteractionManager from "./interaction/LinkInteractionManager";
-import Link from "./link/Link";
 import { Firewall } from "./link/Firewall"
 
 
@@ -16,10 +15,10 @@ export default class Game {
     private prevTime?: number = 0;
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new ToolbarInteractionManager([
-        [new CreateLinkIcon(), new CreateLinkInteractionManager(this)],
-        [new CreateLinkIcon(), new AvastInteractionManager(this)],
-        [new CreateLinkIcon(), new LinkInteractionManager(this, link => link.deleteLink(this))],
-        [new CreateLinkIcon(), new LinkInteractionManager(this, link => this.registerObject( link.attachment = 
+        [new CreateLinkIcon('/addLink.svg'), new CreateLinkInteractionManager(this)],
+        [new CreateLinkIcon('/removeLink.svg'), new LinkInteractionManager(this, link => link.deleteLink(this))],
+        [new CreateLinkIcon('/avast-logo.png'), new AvastInteractionManager(this)],
+        [new CreateLinkIcon('/firewall.svg'), new LinkInteractionManager(this, link => this.registerObject( link.attachment = 
                                 new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) ))],
     ]);
     private firstUpdate = true;

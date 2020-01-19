@@ -22,9 +22,6 @@ export class GameContainer extends React.Component<GameProps> {
                         onMouseOut={this.handleMouseOut.bind(this)}>
                     Your browser doesn't support this functionality
                 </canvas>
-                <div className="hidden">
-
-                </div>
             </div>
         );
     }
@@ -75,6 +72,10 @@ export class GameContainer extends React.Component<GameProps> {
 
     componentDidUpdate() {
         this.update();
+    }
+
+    getResources() {
+        //return this.refs.
     }
 }
 

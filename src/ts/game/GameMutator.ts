@@ -49,7 +49,6 @@ export default class GameMutator extends Drupdatable {
             let x = Math.floor(Math.random() * (this.width - 60 - TOOLBAR_ICON_SIZE)) + 30 + TOOLBAR_ICON_SIZE;
             let y = Math.floor(Math.random() * (this.height - 60 - (NODE_PACKET_LAYOUT_HEIGHT * PACKET_WIDTH * 1.6))) + 30 + (NODE_PACKET_LAYOUT_HEIGHT * PACKET_WIDTH * 1.6);
             newNode = new BasicNode(this.generateDestination, nodeName, x, y);
-            console.log(game.getObjects());
         } while (game.getObjects().some(this.newNodeTooClose(newNode)));
 
         game.registerObject(newNode);
