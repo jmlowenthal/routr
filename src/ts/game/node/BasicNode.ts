@@ -5,7 +5,7 @@ import { BoundingBox } from '../types';
 import { BadPacket } from '../packet/BadPacket';
 import { Exp } from '../Statistics';
 import Link from '../link/Link';
-import { NODE_MAX_HEALTH, PACKET_SPAWN_GAMMA, INFECTED_SPAWN_PENALTY, MAX_QUEUE_LENGTH, NODE_RADIUS, NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH, ANTIVIRUS_PACKET_HEALTH } from '../MagicNumber';
+import { NODE_MAX_HEALTH, PACKET_SPAWN_GAMMA, INFECTED_SPAWN_PENALTY, MAX_QUEUE_LENGTH, NODE_RADIUS, NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH } from '../MagicNumber';
 
 export class BasicNode extends AbstractNode {
 
@@ -58,7 +58,7 @@ export class BasicNode extends AbstractNode {
             }
         }
         this.attachedLinks.sort(() => 0.5 - Math.random());
-        this.packetsList.sort((x, y) => x.isBad() ? -1 : (y.isBad() ? 1 : 0));
+        this.packetsList.sort((x, y) => x.priority() - y.priority());
     }
 
     isRoutable(): boolean {
@@ -67,12 +67,7 @@ export class BasicNode extends AbstractNode {
 
     receivePacket(p: AbstractPacket): void {
         if(p.destination === this){
-          if (p.isBad()) {
-              this.health = Math.max(this.health - 1, 0);
-          }
-          else if (p.isAntiMalware()) {
-              this.health = Math.min(this.health + ANTIVIRUS_PACKET_HEALTH, NODE_MAX_HEALTH);
-          }
+            p.deliver(this);
         }
         else {
             this.packetsList.push(p);
@@ -116,12 +111,11 @@ export class BasicNode extends AbstractNode {
         }
         let maxj = Math.floor((this.packetsList.length - 1) / NODE_PACKET_LAYOUT_HEIGHT);
         this.packetsList.forEach((p, i) => {
-            ctx.fillStyle = p.isBad() ? "red" : "white";
             let j = Math.floor(i / NODE_PACKET_LAYOUT_HEIGHT);
             i = i % NODE_PACKET_LAYOUT_HEIGHT;
             let x = this.x - (PACKET_WIDTH / 2) + (PACKET_WIDTH * 1.5) * (j - maxj / 2);
             let y = this.y - NODE_RADIUS - (PACKET_WIDTH * 1.5) * (i + 2);
-            ctx.fillRect(x, y, PACKET_WIDTH, PACKET_WIDTH);
+            p.draw(ctx, x, y);
         });
         ctx.fillStyle = 'white';
         ctx.strokeStyle = 'white';

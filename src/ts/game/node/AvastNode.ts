@@ -49,11 +49,7 @@ export class AvastNode extends AbstractNode {
             i = i % NODE_PACKET_LAYOUT_HEIGHT;
             let x = this.x - (PACKET_WIDTH / 2) + (PACKET_WIDTH * 1.5) * (j - maxj / 2);
             let y = this.y - 15 - (PACKET_WIDTH * 1.5) * (i + 2);
-            ctx.lineWidth = 2;
-            ctx.fillStyle = "#FF7800";
-            ctx.beginPath();
-            ctx.arc(x + (PACKET_WIDTH * 0.5), y + (PACKET_WIDTH * 0.5), PACKET_WIDTH / 2, 0, 2 * Math.PI);
-            ctx.fill();
+            p.draw(ctx, x, y);
         });
     }
 

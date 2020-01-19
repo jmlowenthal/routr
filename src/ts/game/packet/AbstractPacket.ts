@@ -10,7 +10,8 @@ export abstract class AbstractPacket {
         this.destination = dest;
     }
 
-    abstract isBad(): boolean;
-    abstract isAntiMalware(): boolean;
+    abstract draw(ctx: CanvasRenderingContext2D, x: number, y: number): void;
+    abstract priority(): number;
+    deliver(node: AbstractNode): void {};
 
 }
