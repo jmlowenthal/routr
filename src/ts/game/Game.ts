@@ -24,7 +24,7 @@ export default class Game {
         let A = new BasicNode(generateDestination, "A", 200, 100);
         let B = new BasicNode(generateDestination, "B", 500, 150);
         let C = new BasicNode(generateDestination, "C", 400, 250);
-        let D = new BasicNode(generateDestination, "D", 300, 500);
+        let D = new BasicNode(generateDestination, "D", 300, 400);
         let E = new BasicNode(generateDestination, "E", 450, 300);
         this.registerObject(A);
         this.registerObject(B);

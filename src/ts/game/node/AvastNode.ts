@@ -8,24 +8,28 @@ import { AntiMalwarePacket } from '../packet/AntiMalwarePacket';
 export class AvastNode extends AbstractNode {
     private img: HTMLImageElement;
     private packetsList: AbstractPacket[] = [];
+    private timer: number = 0;
 
     constructor(x: number, y: number) {
         super(x,y);
         this.img = new Image();
         this.img.src = "/avast-logo.png";
-        var packet = new AntiMalwarePacket(this, this);
-        this.packetsList.push(packet);
-        this.packetsList.push(packet);
-        this.packetsList.push(packet);
-        this.packetsList.push(packet);
-        this.packetsList.push(packet);
+        this.packetsList.push(new AntiMalwarePacket(this, this));
     }
     update(dt: number, game: Game): void {
-        // throw new Error("Method not implemented.");
+        this.timer += dt;
+        if (this.timer >= 100000 && !this.isQueueFull()) {
+            this.timer = 0;
+            this.packetsList.push(new AntiMalwarePacket(this, this));
+        }
+    }
+    
+    isQueueOverflowed(): boolean {
+        return false;
     }
 
-    isQueueOverflowed() {
-        return false;
+    isQueueFull() {
+        return this.packetsList.length === 5;
     }
 
     isRoutable() {
