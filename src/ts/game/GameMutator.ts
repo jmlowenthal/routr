@@ -6,17 +6,20 @@ import { AbstractNode } from "./node/AbstractNode";
 export default class GameMutator extends Drupdatable {
     private static readonly NODE_CREATION_RATE_PARAM = 1000000;
     private static readonly MIN_DISTANCE_BETWEEN_OBJECTS = 30;
+    private static readonly INFECTION_TIMESTEP: number = 30_000; //ms
 
     private nodeNames = "DEFGHIJKLMNOPQRSTUVWZYZ".split("");
     private timeSinceLastNodeCreation = 0;
     private width = 0;
     private height = 0;
+    private time = 0;
 
     constructor(private generateDestination: (_: AbstractNode) => AbstractNode) {
         super();
     }
 
     update(dt: number, game: Game) {
+        this.time += dt;
         this.timeSinceLastNodeCreation += dt;
 
         if (Math.random() < this.probability() * (dt / 1000) && this.nodeNames.length > 0) {
@@ -32,6 +35,12 @@ export default class GameMutator extends Drupdatable {
             } while (game.getObjects().some(this.newNodeTooClose(newNode)));
 
             game.registerObject(newNode);
+        }
+
+        if (Math.floor((this.time - dt) / GameMutator.INFECTION_TIMESTEP) !== Math.floor(this.time / GameMutator.INFECTION_TIMESTEP)) {
+            var nodes = game.getObjects().filter(o => o instanceof BasicNode) as BasicNode[];
+            // Infect a random node
+            nodes[Math.floor(Math.random() * nodes.length)].setHealth(0);
         }
     }
 

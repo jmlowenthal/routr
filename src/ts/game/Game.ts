@@ -9,8 +9,7 @@ import Link from "./link/Link";
 
 
 export default class Game {
-    private initialTime?: number;
-    private time = 0;
+    private prevTime?: number = 0;
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new DefaultInteractionManager(this);
 
@@ -24,7 +23,7 @@ export default class Game {
         let A = new BasicNode(generateDestination, "A", 200, 100);
         let B = new BasicNode(generateDestination, "B", 500, 150);
         let C = new BasicNode(generateDestination, "C", 400, 250);
-        let D = new BasicNode(generateDestination, "D", 300, 500);
+        let D = new BasicNode(generateDestination, "D", 300, 400);
         let E = new BasicNode(generateDestination, "E", 450, 300);
         this.registerObject(A);
         this.registerObject(B);
@@ -41,18 +40,17 @@ export default class Game {
         this.registerObject(new Link([avastNode, B]));
 
         this.gameMutator = new GameMutator(generateDestination);
-        // this.registerObject(this.gameMutator);
+        this.registerObject(this.gameMutator);
     }
 
     update(timestamp: number, ctx: CanvasRenderingContext2D, width: number, height: number) {
         let dt: number;
-        if (this.initialTime === undefined) {
-            this.initialTime = timestamp;
+        if (this.prevTime === undefined) {
             dt = 0;
-            this.time = 0;
+            this.prevTime = timestamp;
         } else {
-            dt = timestamp - this.time;
-            this.time = timestamp - this.initialTime;
+            dt = timestamp - this.prevTime;
+            this.prevTime = timestamp;
         }
 
         this.gameMutator.setScreenDimensions(width, height);
