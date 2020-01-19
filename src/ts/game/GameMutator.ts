@@ -51,6 +51,7 @@ export default class GameMutator extends Drupdatable {
             newNode = new BasicNode(this.generateDestination, nodeName, x, y);
         } while (game.getObjects().some(this.newNodeTooClose(newNode)));
 
+        game.nodeCount++;
         game.registerObject(newNode);
     }
 

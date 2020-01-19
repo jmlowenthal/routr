@@ -5,13 +5,13 @@ import { Position } from "../types";
 
 export class ToolbarInteractionManager extends InteractionManager {
 
-    private tools: [Icon, InteractionManager][];
+    private tools: [Icon, InteractionManager, () => boolean][];
     private currentToolIndex: number = -1;
     private currentMousePosition?: Position;
 
     private static readonly ToolbarOffsetTop = 30 + TOOLBAR_ICON_SPACING;
 
-    constructor(tools: [Icon, InteractionManager][]) {
+    constructor(tools: [Icon, InteractionManager, () => boolean][]) {
         super();
         this.tools = tools;
     }
@@ -21,7 +21,7 @@ export class ToolbarInteractionManager extends InteractionManager {
         if (i !== null) {
             this.currentToolIndex = this.currentToolIndex !== i ? i : -1;
         }
-        else if (this.currentToolIndex >= 0) {
+        else if (this.currentToolIndex >= 0 && this.tools[this.currentToolIndex][2]()) {
             this.tools[this.currentToolIndex][1] = this.tools[this.currentToolIndex][1].handleClick(pos);
         }
         return this;
@@ -50,7 +50,7 @@ export class ToolbarInteractionManager extends InteractionManager {
         this.tools.forEach((t, i) => {
             let hovered = this.currentMousePosition !== undefined && this.getToolAtPosition(this.currentMousePosition) === i;
             let state: SelectionState;
-            if (this.currentToolIndex === i) {
+            if (this.currentToolIndex === i && this.tools[this.currentToolIndex][2]()) {
                 if (hovered) {
                     state = SelectionState.HOVERED_SELECTED;
                 } else {
