@@ -32,9 +32,9 @@ export class BasicNode extends AbstractNode {
         if (this.health > 0) {
             if (Math.random() < Exp(BasicNode.PACKET_DELAY_GAMMA, this.timer - dt, this.timer)) {
                 this.timer = 0;
-                var dest = this.generateDestination(this);
+                let dest = this.generateDestination(this);
                 if (dest) {
-                    var packet = new BasicPacket(this, dest);
+                    let packet = new BasicPacket(this, dest);
                     this.packetsList.push(packet);
                 }
             }
@@ -42,9 +42,9 @@ export class BasicNode extends AbstractNode {
         else {
             if (Math.random() < Exp(BasicNode.PACKET_DELAY_GAMMA, this.timer - dt, this.timer) * BasicNode.BAD_GENERATION_RATIO) {
                 this.timer = 0;
-                var dest = this.generateDestination(this);
+                let dest = this.generateDestination(this);
                 if (dest) {
-                    var packet = new BadPacket(this, dest);
+                    let packet = new BadPacket(this, dest);
                     this.packetsList.push(packet);
                 }
             }
