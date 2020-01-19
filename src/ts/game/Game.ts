@@ -19,7 +19,8 @@ export default class Game {
         [new CreateLinkIcon(), new CreateLinkInteractionManager(this)],
         [new CreateLinkIcon(), new AvastInteractionManager(this)],
         [new CreateLinkIcon(), new LinkInteractionManager(this, link => link.deleteLink(this))],
-        [new CreateLinkIcon(), new LinkInteractionManager(this, link => link.attachment = new Firewall())],
+        [new CreateLinkIcon(), new LinkInteractionManager(this, link => this.registerObject( link.attachment = 
+                                new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) ))],
     ]);
     private firstUpdate = true;
 
