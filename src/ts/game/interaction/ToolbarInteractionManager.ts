@@ -9,6 +9,8 @@ export class ToolbarInteractionManager extends InteractionManager {
     private currentToolIndex: number = -1;
     private currentMousePosition?: Position;
 
+    private static readonly ToolbarOffsetTop = 30 + TOOLBAR_ICON_SPACING;
+
     constructor(tools: [Icon, InteractionManager][]) {
         super();
         this.tools = tools;
@@ -34,13 +36,14 @@ export class ToolbarInteractionManager extends InteractionManager {
     }
 
     getToolAtPosition(pos: Position): number|null {
-        if (pos.x > TOOLBAR_ICON_SIZE || pos.y > (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) * this.tools.length) {
+        let y = pos.y - ToolbarInteractionManager.ToolbarOffsetTop;
+        if (pos.x > TOOLBAR_ICON_SIZE || y > (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) * this.tools.length) {
             return null;
         }
-        if (pos.y % (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) < TOOLBAR_ICON_SPACING) {
+        if (y % (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) < TOOLBAR_ICON_SPACING) {
             return null;
         }
-        return Math.floor(pos.y / (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING));
+        return Math.floor(y / (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING));
     }
 
     draw(ctx: CanvasRenderingContext2D) {
@@ -60,7 +63,13 @@ export class ToolbarInteractionManager extends InteractionManager {
                     state = SelectionState.UNSELECTED;
                 }
             }
-            t[0].draw(ctx, 0, TOOLBAR_ICON_SIZE * i + TOOLBAR_ICON_SPACING * (i + 1), TOOLBAR_ICON_SIZE, TOOLBAR_ICON_SIZE, state);
+            t[0].draw(
+                    ctx,
+                    0,
+                    TOOLBAR_ICON_SIZE * i + TOOLBAR_ICON_SPACING * (i + 1) + ToolbarInteractionManager.ToolbarOffsetTop,
+                    TOOLBAR_ICON_SIZE,
+                    TOOLBAR_ICON_SIZE,
+                    state);
         })
     }
 

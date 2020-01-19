@@ -9,6 +9,7 @@ import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
 import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
 import LinkInteractionManager from "./interaction/LinkInteractionManager";
 import { Firewall } from "./link/Firewall"
+import Score from "./Score";
 
 
 export default class Game {
@@ -33,6 +34,7 @@ export default class Game {
                 [0] as AbstractNode;
         this.gameMutator = new GameMutator(generateDestination);
         this.registerObject(this.gameMutator);
+        this.registerObject(new Score(this));
     }
 
     update(timestamp: number, ctx: CanvasRenderingContext2D, width: number, height: number) {
@@ -85,5 +87,9 @@ export default class Game {
 
     withInteractionManager(fn: (im: InteractionManager) => InteractionManager) {
         this.interactionManager = fn(this.interactionManager);
+    }
+
+    getScore() {
+        return this.score;
     }
 }
