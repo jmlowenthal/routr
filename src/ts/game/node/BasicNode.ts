@@ -2,15 +2,16 @@ import { AbstractNode } from './AbstractNode';
 import { AbstractPacket } from '../packet/AbstractPacket';
 import { BasicPacket } from '../packet/BasicPacket';
 import { BoundingBox } from '../types';
+import { BadPacket } from '../packet/BadPacket';
 
 export class BasicNode extends AbstractNode {
 
     public static readonly RADIUS: number = 20;
-    public static readonly MAX_HEALTH: number = 10;
+    public static readonly MAX_HEALTH: number = 3;
     public static readonly MAX_QUEUE_LENGTH: number = 20;
     public static readonly MAX_PACKET_DELAY: number = 10;
-
     public static readonly MAX_STACK_HEIGHT: number = 5;
+    public static readonly BAD_GENERATION_RATIO: number = 0.5;
 
     private timer: number = 0;
     private packetsList: AbstractPacket[] = [];
@@ -27,12 +28,24 @@ export class BasicNode extends AbstractNode {
     public update(dt: number): void {
         //generate packets
         this.timer += dt;
-        if (Math.random() < this.probability()) {
-            this.timer = 0;
-            var dest = this.generateDestination(this);
-            if (dest) {
-                var packet = new BasicPacket(this, dest);
-                this.packetsList.push(packet);
+        if (this.health > 0) {
+            if (Math.random() < this.probability()) {
+                this.timer = 0;
+                var dest = this.generateDestination(this);
+                if (dest) {
+                    var packet = new BasicPacket(this, dest);
+                    this.packetsList.push(packet);
+                }
+            }
+        }
+        else {
+            if (Math.random() < this.probability() * BasicNode.BAD_GENERATION_RATIO) {
+                this.timer = 0;
+                var dest = this.generateDestination(this);
+                if (dest) {
+                    var packet = new BadPacket(this, dest);
+                    this.packetsList.push(packet);
+                }
             }
         }
         
@@ -48,7 +61,8 @@ export class BasicNode extends AbstractNode {
             }
         }
         
-        this.attachedLinks.sort((x, y) => 0.5 - Math.random())
+        this.attachedLinks.sort((x, y) => 0.5 - Math.random());
+        this.packetsList.sort((x, y) => x.isBad() ? -1 : (y.isBad() ? 1 : 0));
     }
 
     private probability(): number {
@@ -87,7 +101,9 @@ export class BasicNode extends AbstractNode {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 8 * (this.health / BasicNode.MAX_HEALTH) + 2;
+        ctx.fillStyle = this.health > 0 ? 'white' : 'red';
+        ctx.strokeStyle = this.health > 0 ? 'white' : 'red';
         ctx.beginPath();
         ctx.moveTo(this.x + BasicNode.RADIUS, this.y);
         ctx.arc(this.x, this.y, BasicNode.RADIUS, 0, 2 * Math.PI);
@@ -98,12 +114,15 @@ export class BasicNode extends AbstractNode {
         ctx.fillText(this.name, this.x, this.y + 2);
         let maxj = Math.floor((this.packetsList.length - 1) / BasicNode.MAX_STACK_HEIGHT);
         this.packetsList.forEach((p, i) => {
+            ctx.fillStyle = p.isBad() ? "red" : "white";
             let j = Math.floor(i / BasicNode.MAX_STACK_HEIGHT);
             i = i % BasicNode.MAX_STACK_HEIGHT;
             let x = this.x - (AbstractPacket.WIDTH / 2) + (AbstractPacket.WIDTH * 1.5) * (j - maxj / 2);
             let y = this.y - BasicNode.RADIUS - (AbstractPacket.WIDTH * 1.5) * (i + 2);
             ctx.fillRect(x, y, AbstractPacket.WIDTH, AbstractPacket.WIDTH);
         });
+        ctx.fillStyle = 'white';
+        ctx.strokeStyle = 'white';
     }
 
     getBoundingBox(): BoundingBox {

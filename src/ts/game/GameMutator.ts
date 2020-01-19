@@ -12,7 +12,7 @@ export default class GameMutator extends Drupdatable {
     private width = 0;
     private height = 0;
 
-    constructor(private generateDestination: () => AbstractNode) {
+    constructor(private generateDestination: (_: AbstractNode) => AbstractNode) {
         super();
     }
 
