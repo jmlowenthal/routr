@@ -9,6 +9,7 @@ export default class Score extends Drupdatable {
     draw(ctx: CanvasRenderingContext2D) {
         ctx.fillStyle = '#fff3';
         ctx.fillRect(0, 0, 125, 40);
+        ctx.font = 'bold 20px sans-serif';
         ctx.fillStyle = '#fff';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';

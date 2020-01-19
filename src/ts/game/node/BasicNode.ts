@@ -87,7 +87,7 @@ export class BasicNode extends AbstractNode {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 5;
         ctx.fillStyle = this.health > 0 ? 'white' : 'red';
         ctx.strokeStyle = this.health > 0 ? 'white' : 'red';
         ctx.beginPath();
@@ -96,12 +96,6 @@ export class BasicNode extends AbstractNode {
         ctx.fillStyle = '#282C34';
         ctx.fill();
         ctx.stroke();
-        ctx.fillStyle = this.health > 0 ? 'white' : 'red';
-        ctx.strokeStyle = this.health > 0 ? 'white' : 'red';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.font = 'bold 20px sans-serif';
-        ctx.fillText(this.name, this.x, this.y + 2);
         if (this.health < NODE_MAX_HEALTH && this.health > 0) {
             ctx.strokeStyle = 'red';
             ctx.beginPath();

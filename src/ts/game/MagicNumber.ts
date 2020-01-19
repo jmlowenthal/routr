@@ -20,6 +20,7 @@ export const ANTIVIRUS_PACKET_HEALTH: number = NODE_MAX_HEALTH;
 
 export const TOOLBAR_ICON_SIZE: number = 50;
 export const TOOLBAR_ICON_SPACING: number = 10;
+export const TOOLBAR_OVERALL_WIDTH: number = 125;
 
 export const LINK_DELETION_RANGE = 15;
 
