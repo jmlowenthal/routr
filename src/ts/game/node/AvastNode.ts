@@ -53,6 +53,7 @@ export class AvastNode extends AbstractNode {
     }
 
     getBoundingBox(): BoundingBox {
-        return [this.x - 25 - BasicNode.RADIUS, this.y - 25 - BasicNode.RADIUS, this.x - 25 + BasicNode.RADIUS, this.y - 25 + BasicNode.RADIUS];
+        return [this.x - this.img.width / 2, this.y - this.img.height / 2,
+                this.x + this.img.width / 2, this.y + this.img.height / 2];
     }
 }
