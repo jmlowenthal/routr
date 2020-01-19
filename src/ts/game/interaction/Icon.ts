@@ -1,5 +1,12 @@
 import { TOOLBAR_ICON_SIZE } from "../MagicNumber";
 
+export enum SelectionState {
+    UNSELECTED,
+    HOVERED_UNSELECTED,
+    HOVERED_SELECTED,
+    SELECTED,
+}
+
 export class Icon {
     private img: HTMLImageElement;
 
@@ -59,11 +66,4 @@ export class Icon {
             ctx.restore();
         }
     }
-}
-
-export enum SelectionState {
-    UNSELECTED,
-    HOVERED_UNSELECTED,
-    HOVERED_SELECTED,
-    SELECTED,
 }
