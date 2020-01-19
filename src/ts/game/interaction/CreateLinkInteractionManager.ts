@@ -3,8 +3,10 @@ import Game from "../Game";
 import { AbstractNode } from "../node/AbstractNode";
 import DrawingLinkInteractionManager from "./DrawingLinkInteractionManager";
 
-export default class DefaultInteractionManager implements InteractionManager {
-    constructor(private game: Game) { }
+export default class CreateLinkInteractionManager extends InteractionManager {
+    constructor(private game: Game) {
+        super();
+    }
 
     handleClick(x: number, y: number): InteractionManager {
         let clickedObjects = this.game.getObjects().filter(object => object.inside(x, y));

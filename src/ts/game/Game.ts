@@ -3,15 +3,19 @@ import { BasicNode } from "./node/BasicNode";
 import GameMutator from "./GameMutator";
 import { AbstractNode } from "./node/AbstractNode";
 import InteractionManager from "./interaction/InteractionManager";
-import DefaultInteractionManager from "./interaction/DefaultInteractionManager";
+import CreateLinkInteractionManager from "./interaction/CreateLinkInteractionManager";
 import { AvastNode } from "./node/AvastNode";
 import Link from "./link/Link";
+import { ToolbarInteractionManager } from "./interaction/ToolbarInteractionManager";
+import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
 
 
 export default class Game {
     private prevTime?: number = 0;
     private gameMutator: GameMutator;
-    private interactionManager: InteractionManager = new DefaultInteractionManager(this);
+    private interactionManager: InteractionManager = new ToolbarInteractionManager([
+        [new CreateLinkIcon(), new CreateLinkInteractionManager(this)]
+    ]);
 
     private objects: Drupdatable[] = [];
 
@@ -63,6 +67,7 @@ export default class Game {
                 .filter(obj => obj.zIndex() !== undefined)
                 .sort((a, b) => a.zIndex()! - b.zIndex()!)
                 .forEach(object => object.draw(ctx));
+        this.interactionManager.draw(ctx);
     }
 
     registerObject(object: Drupdatable) {

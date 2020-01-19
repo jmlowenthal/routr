@@ -1,5 +1,5 @@
 
-export const NODE_CREATION_RATE_PARAM = 1000000;
+export const NODE_CREATION_RATE_PARAM = 30_000;
 export const MIN_DISTANCE_BETWEEN_OBJECTS = 30;
 export const INFECTION_TIMESTEP: number = 60_000; //ms
 
@@ -15,3 +15,5 @@ export const LINK_SPEED_NUMBER: number = 0.3;
 export const PACKET_WIDTH: number = 10;
 
 export const ANTIVIRUS_PACKET_HEALTH: number = 5;
+
+export const TOOLBAR_ICON_SIZE: number = 50;

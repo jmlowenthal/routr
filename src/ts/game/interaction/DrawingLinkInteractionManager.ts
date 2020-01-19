@@ -2,10 +2,12 @@ import InteractionManager from "./InteractionManager";
 import Game from "../Game";
 import { AbstractNode } from "../node/AbstractNode";
 import Link from "../link/Link";
-import DefaultInteractionManager from "./DefaultInteractionManager";
+import CreateLinkInteractionManager from "./CreateLinkInteractionManager";
 
-export default class DrawingLinkInteractionManager implements InteractionManager {
-    constructor(private game: Game, private startNode: AbstractNode) { }
+export default class DrawingLinkInteractionManager extends InteractionManager {
+    constructor(private game: Game, private startNode: AbstractNode) {
+        super();
+    }
 
     handleClick(x: number, y: number): InteractionManager {
         let clickedObjects = this.game.getObjects().filter(object => object.inside(x, y));
@@ -17,7 +19,7 @@ export default class DrawingLinkInteractionManager implements InteractionManager
             }
         }
 
-        return new DefaultInteractionManager(this.game);
+        return new CreateLinkInteractionManager(this.game);
     }
 
     private isAttached(a: AbstractNode, b: AbstractNode): boolean {
