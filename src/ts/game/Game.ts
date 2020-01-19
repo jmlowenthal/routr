@@ -9,6 +9,7 @@ import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
 import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
 import LinkInteractionManager from "./interaction/LinkInteractionManager";
 import Link from "./link/Link";
+import { Firewall } from "./link/Firewall"
 
 
 export default class Game {
@@ -18,6 +19,7 @@ export default class Game {
         [new CreateLinkIcon(), new CreateLinkInteractionManager(this)],
         [new CreateLinkIcon(), new AvastInteractionManager(this)],
         [new CreateLinkIcon(), new LinkInteractionManager(this, link => link.deleteLink(this))],
+        [new CreateLinkIcon(), new LinkInteractionManager(this, link => link.attachment = new Firewall())],
     ]);
     private firstUpdate = true;
 
