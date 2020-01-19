@@ -88,7 +88,6 @@ export class BasicNode extends AbstractNode {
 
     draw(ctx: CanvasRenderingContext2D) {
         ctx.lineWidth = 3;
-        ctx.fillStyle = this.health > 0 ? 'white' : 'red';
         ctx.strokeStyle = this.health > 0 ? 'white' : 'red';
         ctx.beginPath();
         ctx.moveTo(this.x + NODE_RADIUS, this.y);

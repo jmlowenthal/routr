@@ -5,22 +5,22 @@ import { AbstractNode } from "./node/AbstractNode";
 import InteractionManager from "./interaction/InteractionManager";
 import CreateLinkInteractionManager from "./interaction/CreateLinkInteractionManager";
 import { ToolbarInteractionManager } from "./interaction/ToolbarInteractionManager";
-import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
 import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
 import LinkInteractionManager from "./interaction/LinkInteractionManager";
 import { Firewall } from "./link/Firewall"
 import Score from "./Score";
 import { NODES_PER_FIREWALL } from "./MagicNumber";
+import { Icon } from "./interaction/Icon";
 
 
 export default class Game {
     private prevTime?: number;
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new ToolbarInteractionManager([
-        [new CreateLinkIcon('/addLink.svg'), new CreateLinkInteractionManager(this), () => true],
-        [new CreateLinkIcon('/removeLink.svg'), new LinkInteractionManager(this, link => link.deleteLink(this)), () => true],
-        [new CreateLinkIcon('/avast-logo.png'), new AvastInteractionManager(this), () => true],
-        [new CreateLinkIcon('/firewall.svg'), new LinkInteractionManager(this, link => {
+        [new Icon('/addLink.svg', () => 19), new CreateLinkInteractionManager(this), () => true],
+        [new Icon('/removeLink.svg'), new LinkInteractionManager(this, link => link.deleteLink(this)), () => true],
+        [new Icon('/avast-logo.png'), new AvastInteractionManager(this), () => true],
+        [new Icon('/firewall.svg', () => 3), new LinkInteractionManager(this, link => {
                                 this.registerObject( link.attachment = 
                                   new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) );
                                 this.firewallCount++;
