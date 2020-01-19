@@ -26,4 +26,4 @@ export const TOOLBAR_OVERALL_WIDTH: number = 125;
 
 export const LINK_DELETION_RANGE = 15;
 
-export const AVAST_DELAY = 30000;
+export const AVAST_DELAY = 200000;
