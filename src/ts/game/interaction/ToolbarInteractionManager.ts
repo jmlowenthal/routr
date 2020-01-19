@@ -66,11 +66,11 @@ export class ToolbarInteractionManager extends InteractionManager {
             t[0].draw(
                     ctx,
                     0,
-                    TOOLBAR_ICON_SIZE * i + TOOLBAR_ICON_SPACING * (i + 1) + ToolbarInteractionManager.ToolbarOffsetTop,
+                    TOOLBAR_ICON_SIZE * i + TOOLBAR_ICON_SPACING * (i + 3) + ToolbarInteractionManager.ToolbarOffsetTop,
                     TOOLBAR_ICON_SIZE,
                     TOOLBAR_ICON_SIZE,
                     state);
-        })
+        });
     }
 
 }

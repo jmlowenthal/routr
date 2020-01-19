@@ -12,6 +12,7 @@ export const INFECTED_SPAWN_PENALTY: number = 5;
 export const REGENERATION_PER_MILLI: number = 0.0001;
 
 export const NODES_PER_FIREWALL: number = 3;
+export const LINKS_PER_NODE = 1.5;
 
 export const LINK_SPEED_NUMBER: number = 0.4;
 
