@@ -29,7 +29,7 @@ export default class Game {
     private firstUpdate = true;
     private score = 0;
     public nodeCount = 0;
-    private firewallCount = 0;
+    public firewallCount = 0;
     private objects: Drupdatable[] = [];
 
     constructor(private gameOverCallback: (score: number) => void) {

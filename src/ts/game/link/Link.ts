@@ -96,6 +96,7 @@ export default class Link extends Drupdatable {
       this.nodes[1].attachedLinks = this.nodes[1].attachedLinks.filter(l => l !== this);
       if(this.attachment !== undefined){
         game.unregisterObject(this.attachment);
+        game.firewallCount--;
       }
       game.unregisterObject(this);       
     }
