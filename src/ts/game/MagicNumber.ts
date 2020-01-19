@@ -1,7 +1,7 @@
 
 export const NODE_CREATION_RATE_PARAM = 20000;
 export const MIN_DISTANCE_BETWEEN_OBJECTS = 30;
-export const INFECTION_TIMESTEP: number = 30_000; //ms
+export const INFECTION_TIMESTEP: number = 20_000; //ms
 
 export const NODE_RADIUS: number = 20;
 export const NODE_MAX_HEALTH: number = 5;
