@@ -100,8 +100,6 @@ export default class Link extends Drupdatable {
     public draw(ctx: CanvasRenderingContext2D) {
         let x0 = this.nodes[0].x, y0 = this.nodes[0].y;
         let x1 = this.nodes[1].x, y1 = this.nodes[1].y;
-        let dx = x0 - x1, dy = y0 - y1;
-        let len = Math.sqrt(dx * dx + dy * dy);
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(x0, y0);
