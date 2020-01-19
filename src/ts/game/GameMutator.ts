@@ -2,11 +2,9 @@ import Drupdatable from "./Drupdatable";
 import Game from "./Game";
 import { BasicNode } from "./node/BasicNode";
 import { AbstractNode } from "./node/AbstractNode";
+import { INFECTION_TIMESTEP, NODE_CREATION_RATE_PARAM, MIN_DISTANCE_BETWEEN_OBJECTS } from "./MagicNumber";
 
 export default class GameMutator extends Drupdatable {
-    private static readonly NODE_CREATION_RATE_PARAM = 1000000;
-    private static readonly MIN_DISTANCE_BETWEEN_OBJECTS = 30;
-    private static readonly INFECTION_TIMESTEP: number = 60_000; //ms
 
     private nodeNames = "DEFGHIJKLMNOPQRSTUVWZYZ".split("");
     private timeSinceLastNodeCreation = 0;
@@ -37,7 +35,7 @@ export default class GameMutator extends Drupdatable {
             game.registerObject(newNode);
         }
 
-        if (Math.floor((this.time - dt) / GameMutator.INFECTION_TIMESTEP) !== Math.floor(this.time / GameMutator.INFECTION_TIMESTEP)) {
+        if (Math.floor((this.time - dt) / INFECTION_TIMESTEP) !== Math.floor(this.time / INFECTION_TIMESTEP)) {
             var nodes = game.getObjects().filter(o => o instanceof BasicNode) as BasicNode[];
             // Infect a random node
             nodes[Math.floor(Math.random() * nodes.length)].setHealth(0);
@@ -45,16 +43,16 @@ export default class GameMutator extends Drupdatable {
     }
 
     private probability(): number {
-        return Math.exp(this.timeSinceLastNodeCreation - GameMutator.NODE_CREATION_RATE_PARAM);
+        return Math.exp(this.timeSinceLastNodeCreation - NODE_CREATION_RATE_PARAM);
     }
 
     private newNodeTooClose = (newNode: BasicNode) => (other: Drupdatable) => {
         let newBoundingBox = newNode.getBoundingBox();
         let otherBoundingBox = other.getBoundingBox();
-        return newBoundingBox[0] - otherBoundingBox[2] < GameMutator.MIN_DISTANCE_BETWEEN_OBJECTS &&
-                otherBoundingBox[0] - newBoundingBox[2] < GameMutator.MIN_DISTANCE_BETWEEN_OBJECTS && // x
-                newBoundingBox[1] - otherBoundingBox[3] < GameMutator.MIN_DISTANCE_BETWEEN_OBJECTS &&
-                otherBoundingBox[1] - newBoundingBox[3] < GameMutator.MIN_DISTANCE_BETWEEN_OBJECTS; // y
+        return newBoundingBox[0] - otherBoundingBox[2] < MIN_DISTANCE_BETWEEN_OBJECTS &&
+                otherBoundingBox[0] - newBoundingBox[2] < MIN_DISTANCE_BETWEEN_OBJECTS && // x
+                newBoundingBox[1] - otherBoundingBox[3] < MIN_DISTANCE_BETWEEN_OBJECTS &&
+                otherBoundingBox[1] - newBoundingBox[3] < MIN_DISTANCE_BETWEEN_OBJECTS; // y
     }
 
     setScreenDimensions(width: number, height: number) {

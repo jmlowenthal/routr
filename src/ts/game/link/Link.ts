@@ -2,11 +2,9 @@ import { AbstractPacket } from "../packet/AbstractPacket";
 import { AbstractNode } from "../node/AbstractNode";
 import { AbstractAttachment } from "./AbstractAttachment";
 import Drupdatable from "../Drupdatable";
-import { BasicNode } from "../node/BasicNode";
+import { LINK_SPEED_NUMBER, PACKET_WIDTH } from "../MagicNumber";
 
 export default class Link extends Drupdatable {
-
-    public static readonly LENGTH_TIME_MAGIC_FACTOR_OF_PING: number = 0.3;
 
     private nodes: [AbstractNode, AbstractNode]; // [0] <----> [1]
     private bandwidth: number = 1;
@@ -19,7 +17,7 @@ export default class Link extends Drupdatable {
         this.nodes = nodes;
         let dx = nodes[0].x - nodes[1].x;
         let dy = nodes[0].y - nodes[1].y;
-        this.latency = Link.LENGTH_TIME_MAGIC_FACTOR_OF_PING / Math.sqrt(dx * dx + dy * dy);
+        this.latency = LINK_SPEED_NUMBER / Math.sqrt(dx * dx + dy * dy);
         nodes[0].attachedLinks.push(this);
         nodes[1].attachedLinks.push(this);
     }
@@ -100,9 +98,9 @@ export default class Link extends Drupdatable {
         this.packets.forEach(p => {
             ctx.fillStyle = p[0].isBad() ? "red" : "white";
             let l = p[2] ? p[1] : 1 - p[1];
-            let x = x0 * (1 - l) + x1 * l - AbstractPacket.WIDTH / 2;
-            let y = y0 * (1 - l) + y1 * l - AbstractPacket.WIDTH / 2;
-            ctx.fillRect(x, y, AbstractPacket.WIDTH, AbstractPacket.WIDTH);
+            let x = x0 * (1 - l) + x1 * l - PACKET_WIDTH / 2;
+            let y = y0 * (1 - l) + y1 * l - PACKET_WIDTH / 2;
+            ctx.fillRect(x, y, PACKET_WIDTH, PACKET_WIDTH);
         });
 
         ctx.fillStyle = "white";

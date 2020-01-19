@@ -4,6 +4,7 @@ import { AbstractPacket } from '../packet/AbstractPacket';
 import { BasicNode } from './BasicNode';
 import { BoundingBox } from '../types';
 import { AntiMalwarePacket } from '../packet/AntiMalwarePacket';
+import { NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH } from '../MagicNumber';
 
 export class AvastNode extends AbstractNode {
     private img: HTMLImageElement;
@@ -42,16 +43,16 @@ export class AvastNode extends AbstractNode {
 
     draw(ctx: CanvasRenderingContext2D) {
         ctx.drawImage(this.img, this.x - 25, this.y - 25);
-        let maxj = Math.floor((this.packetsList.length - 1) / BasicNode.MAX_STACK_HEIGHT);
+        let maxj = Math.floor((this.packetsList.length - 1) / NODE_PACKET_LAYOUT_HEIGHT);
         this.packetsList.forEach((p, i) => {
-            let j = Math.floor(i / BasicNode.MAX_STACK_HEIGHT);
-            i = i % BasicNode.MAX_STACK_HEIGHT;
-            let x = this.x - (AbstractPacket.WIDTH / 2) + (AbstractPacket.WIDTH * 1.5) * (j - maxj / 2);
-            let y = this.y - 15 - (AbstractPacket.WIDTH * 1.5) * (i + 2);
+            let j = Math.floor(i / NODE_PACKET_LAYOUT_HEIGHT);
+            i = i % NODE_PACKET_LAYOUT_HEIGHT;
+            let x = this.x - (PACKET_WIDTH / 2) + (PACKET_WIDTH * 1.5) * (j - maxj / 2);
+            let y = this.y - 15 - (PACKET_WIDTH * 1.5) * (i + 2);
             ctx.lineWidth = 2;
             ctx.fillStyle = "#FF7800";
             ctx.beginPath();
-            ctx.arc(x + (AbstractPacket.WIDTH * 0.5), y + (AbstractPacket.WIDTH * 0.5), AbstractPacket.WIDTH / 2, 0, 2 * Math.PI);
+            ctx.arc(x + (PACKET_WIDTH * 0.5), y + (PACKET_WIDTH * 0.5), PACKET_WIDTH / 2, 0, 2 * Math.PI);
             ctx.fill();
         });
     }
