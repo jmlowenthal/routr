@@ -38,10 +38,10 @@ export default class Game {
         this.gameMutator.setScreenDimensions(width, height);
 
         if (this.firstUpdate) {
-            this.firstUpdate = false;
-            this.gameMutator.generateInitialNodes(this);
             let avastNode = new AvastNode(width/2, height/2);
             this.registerObject(avastNode);
+            this.firstUpdate = false;
+            this.gameMutator.generateInitialNodes(this);
         }
 
         ctx.clearRect(0, 0, width, height);
