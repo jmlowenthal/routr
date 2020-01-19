@@ -7,6 +7,8 @@ import CreateLinkInteractionManager from "./interaction/CreateLinkInteractionMan
 import { ToolbarInteractionManager } from "./interaction/ToolbarInteractionManager";
 import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
 import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
+import LinkInteractionManager from "./interaction/LinkInteractionManager";
+import Link from "./link/Link";
 
 
 export default class Game {
@@ -14,7 +16,8 @@ export default class Game {
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new ToolbarInteractionManager([
         [new CreateLinkIcon(), new CreateLinkInteractionManager(this)],
-        [new CreateLinkIcon(), new AvastInteractionManager(this)]
+        [new CreateLinkIcon(), new AvastInteractionManager(this)],
+        [new CreateLinkIcon(), new LinkInteractionManager(this, link => link.deleteLink(this))],
     ]);
     private firstUpdate = true;
 

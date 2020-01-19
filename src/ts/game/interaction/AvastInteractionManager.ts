@@ -26,4 +26,12 @@ export class AvastInteractionManager extends InteractionManager {
 
         return this;
     }
+
+    handleMouseMove(x: number, y: number) {
+        return this;
+    }
+
+    handleMouseOut() {
+        return this;
+    }
 }

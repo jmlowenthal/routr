@@ -13,12 +13,20 @@ export default class LinkInteractionManager extends InteractionManager {
     let links: Link[] = this.game.getObjects().filter(object => object instanceof Link) as Link[];
     let linkCandidates: Link[] = links.filter(link => 
         Math.sqrt((x - link.midpoint()[0])*(x - link.midpoint()[0]) + (y - link.midpoint()[1])*(y - link.midpoint()[1])) < LinkInteractionManager.distance);
-    if(linkCandidates.length = 0){
+    if(linkCandidates.length === 0){
       return this;
     }
     else {
       this.behaviour(linkCandidates[0]);
     }
+    return this;
+  }
+
+  handleMouseMove(x: number, y: number) {
+    return this;
+  }
+
+  handleMouseOut() {
     return this;
   }
 }

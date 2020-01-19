@@ -54,18 +54,14 @@ export class ToolbarInteractionManager extends InteractionManager {
             let state: SelectionState;
             if (this.currentToolIndex === i) {
                 if (hovered) {
-                    console.log("hov_sel");
                     state = SelectionState.HOVERED_SELECTED;
                 } else {
-                    console.log("sel");
                     state = SelectionState.SELECTED;
                 }
             } else {
                 if (hovered) {
-                    console.log("hov_sunel");
                     state = SelectionState.HOVERED_UNSELECTED;
                 } else {
-                    console.log("unsl");
                     state = SelectionState.UNSELECTED;
                 }
             }
