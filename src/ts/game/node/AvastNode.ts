@@ -3,7 +3,7 @@ import Game from '../Game';
 import { AbstractPacket } from '../packet/AbstractPacket';
 import { BoundingBox } from '../types';
 import { AntiMalwarePacket } from '../packet/AntiMalwarePacket';
-import { NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH } from '../MagicNumber';
+import { NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH, AVAST_DELAY } from '../MagicNumber';
 
 export class AvastNode extends AbstractNode {
     private img: HTMLImageElement;
@@ -18,7 +18,7 @@ export class AvastNode extends AbstractNode {
     }
     update(dt: number, game: Game): void {
         this.timer += dt;
-        if (this.timer >= 100000 && !this.isQueueFull()) {
+        if (this.timer >= AVAST_DELAY && !this.isQueueFull()) {
             this.timer = 0;
             this.packetsList.push(new AntiMalwarePacket(this, this));
         }

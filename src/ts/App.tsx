@@ -17,9 +17,6 @@ class App extends React.Component<{}, AppState> {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>Routr</h1> 
-        </header>
         <div ref="game" className="App-game">
         <GameContainer width={this.state.gameWidth} height={this.state.gameHeight}/>
         </div>

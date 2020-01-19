@@ -13,7 +13,7 @@
    height="40px"
    width="40px"
    sodipodi:docname="firewall.svg"
-   inkscape:version="0.92.4 (unknown)">
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -23,18 +23,24 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1004"
+     inkscape:window-width="1600"
+     inkscape:window-height="881"
      id="namedview15"
-     showgrid="false"
+     showgrid="true"
      inkscape:pagecheckerboard="true"
-     inkscape:zoom="11.313709"
-     inkscape:cx="22.950013"
-     inkscape:cy="15.450905"
+     inkscape:zoom="2.56"
+     inkscape:cx="-29.578492"
+     inkscape:cy="35.017495"
      inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:window-y="19"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     inkscape:snap-bbox="true"
+     inkscape:snap-bbox-midpoints="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid925" />
+  </sodipodi:namedview>
   <defs
      id="defs2">
     <inkscape:perspective
@@ -65,34 +71,17 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      transform="translate(-3.8669902,-244.12738)"
      id="layer1">
-    <g
-       sodipodi:type="inkscape:box3d"
-       id="g910"
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:22.67716599;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       inkscape:perspectiveID="#perspective902"
-       inkscape:corner0="0.4728573 : 0.047537587 : 0 : 1"
-       inkscape:corner7="-0.34222625 : 0.020298112 : 0.25 : 1">
-      <path
-         sodipodi:type="inkscape:box3dside"
-         id="path914"
-         style="fill:#ffffff;fill-opacity:0.42995169;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
-         inkscape:box3dsidetype="5"
-         d="M 1.8049384,275.72677 55.929884,252.68929 51.862593,246.23197 7.515833,268.98149 Z"
-         points="55.929884,252.68929 51.862593,246.23197 7.515833,268.98149 1.8049384,275.72677 " />
-      <path
-         sodipodi:type="inkscape:box3dside"
-         id="path916"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
-         inkscape:box3dsidetype="3"
-         d="M 1.8049384,275.72677 55.929884,252.68929 v 41.41162 l -54.1249456,0.12017 z"
-         points="55.929884,252.68929 55.929884,294.10091 1.8049384,294.22108 1.8049384,275.72677 " />
-    </g>
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#f9f9f9;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.54375124;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="m 7.1381536,250.49585 a 1.7291147,1.8160572 0 0 0 -1.7288363,1.81576 v 11.2113 11.20894 11.2113 a 1.7291147,1.8160572 0 0 0 1.7288363,1.81576 H 23.434781 39.731408 50.595827 a 1.7291147,1.8160572 0 0 0 1.728836,-1.81576 v -11.2113 -11.20894 -11.2113 a 1.7291147,1.8160572 0 0 0 -1.728836,-1.81576 H 39.731408 23.434781 Z m 1.7288364,3.63153 h 12.838954 v 7.57976 H 18.002572 8.86699 Z m 16.296628,0 h 12.838954 v 7.57976 h -3.703373 -9.135581 z m 16.296627,0 h 7.406745 v 7.57976 H 41.460245 Z M 8.86699,265.33867 h 7.406746 v 7.57742 H 8.86699 Z m 10.864419,0 h 3.703372 9.135582 v 7.57742 h -9.135582 -3.703372 z m 16.296627,0 h 3.703372 9.135582 v 7.57742 H 39.731408 36.028036 Z M 8.86699,276.54762 h 9.135582 3.703372 v 7.57976 H 8.86699 Z m 16.296628,0 h 9.135581 3.703373 v 7.57976 H 25.163618 Z m 16.296627,0 h 7.406745 v 7.57976 h -7.406745 z"
+       id="rect1074"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
