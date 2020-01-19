@@ -4,6 +4,7 @@ import { BasicPacket } from '../packet/BasicPacket';
 import { BoundingBox } from '../types';
 import { BadPacket } from '../packet/BadPacket';
 import { Exp } from '../Statistics';
+import Link from '../link/Link';
 
 export class BasicNode extends AbstractNode {
 
@@ -38,31 +39,31 @@ export class BasicNode extends AbstractNode {
                     this.packetsList.push(packet);
                 }
             }
+        
+            //sending packets
+            if (this.packetsList.length > 0) {
+                if(this.route(this.packetsList[0])){
+                    this.packetsList.shift();
+                }
+                else {
+                    let head = this.packetsList[0];
+                    this.packetsList.shift();
+                    this.packetsList.push(head);
+                }
+            }    
         }
         else {
             if (Math.random() < Exp(BasicNode.PACKET_DELAY_GAMMA, this.timer - dt, this.timer) * BasicNode.BAD_GENERATION_RATIO) {
                 this.timer = 0;
-                var dest = this.generateDestination(this);
-                if (dest) {
-                    var packet = new BadPacket(this, dest);
-                    this.packetsList.push(packet);
+                let ls = this.getRoutableLinks();
+                if (ls.length > 0) {
+                    let link: Link = ls[Math.floor(Math.random() * ls.length)];
+                    var packet = new BadPacket(this, link.getOtherEnd(this));
+                    link.trySendPacket(packet, this);
                 }
             }
         }
-        
-        //sending packets
-        if (this.packetsList.length > 0) {
-            if(this.route(this.packetsList[0])){
-                this.packetsList.shift();
-            }
-            else {
-                let head = this.packetsList[0];
-                this.packetsList.shift();
-                this.packetsList.push(head);
-            }
-        }
-        
-        this.attachedLinks.sort((x, y) => 0.5 - Math.random());
+        this.attachedLinks.sort(() => 0.5 - Math.random());
         this.packetsList.sort((x, y) => x.isBad() ? -1 : (y.isBad() ? 1 : 0));
     }
 
