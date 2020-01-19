@@ -1,4 +1,5 @@
 import Game from "./Game";
+import { Position } from "./types";
 
 export default abstract class Drupdatable {
     update(dt: number, game: Game) { }
@@ -9,9 +10,9 @@ export default abstract class Drupdatable {
     getBoundingBox(): [number, number, number, number] {
         return [-1, -1, -1, -1];
     }
-    inside(x: number, y: number): boolean {
+    inside(pos: Position): boolean {
         let boundingBox = this.getBoundingBox();
-        return boundingBox[0] <= x && x <= boundingBox[2] &&
-            boundingBox[1] <= y && y <= boundingBox[3];
+        return boundingBox[0] <= pos.x && pos.x <= boundingBox[2] &&
+            boundingBox[1] <= pos.y && pos.y <= boundingBox[3];
     }
 }

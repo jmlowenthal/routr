@@ -1,59 +1,51 @@
 import InteractionManager from "./InteractionManager";
 import { Icon, SelectionState } from "./Icon";
 import { TOOLBAR_ICON_SIZE, TOOLBAR_ICON_SPACING } from "../MagicNumber";
+import { Position } from "../types";
 
 export class ToolbarInteractionManager extends InteractionManager {
 
     private tools: [Icon, InteractionManager][];
     private currentToolIndex: number = -1;
-    private currentMousePosition?: {x: number, y: number};
+    private currentMousePosition?: Position;
 
     constructor(tools: [Icon, InteractionManager][]) {
         super();
         this.tools = tools;
     }
 
-    handleClick(x: number, y: number): InteractionManager {
-        let i = this.getToolAtPosition(x, y);
+    handleClick(pos: Position): InteractionManager {
+        let i = this.getToolAtPosition(pos);
         if (i !== null) {
             this.currentToolIndex = this.currentToolIndex !== i ? i : -1;
         }
         else if (this.currentToolIndex >= 0) {
-            this.tools[this.currentToolIndex][1] = this.tools[this.currentToolIndex][1].handleClick(x, y);
+            this.tools[this.currentToolIndex][1] = this.tools[this.currentToolIndex][1].handleClick(pos);
         }
         return this;
     }
 
-    handleMouseMove(x: number, y: number) {
-        this.currentMousePosition = {x, y};
+    handleMouseMove(pos?: Position) {
+        this.currentMousePosition = pos;
         if (this.currentToolIndex >= 0) {
-            this.tools[this.currentToolIndex][1].handleMouseMove(x, y);
+            this.tools[this.currentToolIndex][1].handleMouseMove(pos);
         }
         return this;
     }
 
-    handleMouseOut() {
-        this.currentMousePosition = undefined;
-        if (this.currentToolIndex >= 0) {
-            this.tools[this.currentToolIndex][1].handleMouseOut();
-        }
-        return this;
-    }
-
-    getToolAtPosition(x: number, y: number): number|null {
-        if (x > TOOLBAR_ICON_SIZE || y > (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) * this.tools.length) {
+    getToolAtPosition(pos: Position): number|null {
+        if (pos.x > TOOLBAR_ICON_SIZE || pos.y > (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) * this.tools.length) {
             return null;
         }
-        if (y % (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) < TOOLBAR_ICON_SPACING) {
+        if (pos.y % (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING) < TOOLBAR_ICON_SPACING) {
             return null;
         }
-        return Math.floor(y / (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING));
+        return Math.floor(pos.y / (TOOLBAR_ICON_SIZE + TOOLBAR_ICON_SPACING));
     }
 
     draw(ctx: CanvasRenderingContext2D) {
         this.tools.forEach((t, i) => {
-            let hovered = this.currentMousePosition !== undefined && 
-                    this.getToolAtPosition(this.currentMousePosition.x, this.currentMousePosition.y) === i;
+            let hovered = this.currentMousePosition !== undefined && this.getToolAtPosition(this.currentMousePosition) === i;
             let state: SelectionState;
             if (this.currentToolIndex === i) {
                 if (hovered) {

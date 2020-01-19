@@ -2,15 +2,16 @@ import InteractionManager from "./InteractionManager";
 import Game from "../Game";
 import { AbstractNode } from "../node/AbstractNode";
 import { AvastNode } from "../node/AvastNode";
+import { Position } from "../types";
 
 export class AvastInteractionManager extends InteractionManager {
     constructor(private game: Game) {
         super();
     }
 
-    handleClick(x: number, y: number): InteractionManager {
+    handleClick(pos: Position): InteractionManager {
         let targets = this.game.getObjects()
-            .filter(object => object.inside(x, y))
+            .filter(object => object.inside(pos))
             .filter(o => o instanceof AbstractNode)
             .filter(o => !(o instanceof AvastNode)) as AbstractNode[];
 
@@ -24,14 +25,6 @@ export class AvastInteractionManager extends InteractionManager {
             }
         });
 
-        return this;
-    }
-
-    handleMouseMove(x: number, y: number) {
-        return this;
-    }
-
-    handleMouseOut() {
         return this;
     }
 }

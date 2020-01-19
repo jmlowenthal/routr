@@ -3,14 +3,15 @@ import Game from "../Game";
 import { AbstractNode } from "../node/AbstractNode";
 import Link from "../link/Link";
 import CreateLinkInteractionManager from "./CreateLinkInteractionManager";
+import { Position } from "../types";
 
 export default class DrawingLinkInteractionManager extends InteractionManager {
     constructor(private game: Game, private startNode: AbstractNode) {
         super();
     }
 
-    handleClick(x: number, y: number): InteractionManager {
-        let clickedObjects = this.game.getObjects().filter(object => object.inside(x, y));
+    handleClick(pos: Position): InteractionManager {
+        let clickedObjects = this.game.getObjects().filter(object => object.inside(pos));
 
         for (let object of clickedObjects) {
             if (object instanceof AbstractNode && object !== this.startNode &&
@@ -26,11 +27,7 @@ export default class DrawingLinkInteractionManager extends InteractionManager {
         return a.attachedLinks.some(link => link.getNodes().indexOf(b) !== -1);
     }
 
-    handleMouseMove(x: number, y: number) {
-        return this;
-    }
-
-    handleMouseOut() {
+    handleMouseMove(pos: Position) {
         return this;
     }
 }
