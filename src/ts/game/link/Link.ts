@@ -102,6 +102,7 @@ export default class Link extends Drupdatable {
     }
 
     public draw(ctx: CanvasRenderingContext2D) {
+        ctx.strokeStyle = "white";
         let x0 = this.nodes[0].x, y0 = this.nodes[0].y;
         let x1 = this.nodes[1].x, y1 = this.nodes[1].y;
         ctx.lineWidth = 2;
