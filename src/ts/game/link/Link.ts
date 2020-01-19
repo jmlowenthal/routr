@@ -28,10 +28,10 @@ export default class Link extends Drupdatable {
         if (this.packets.length >= this.bandwidth) {
             return false;
         }
-        if (from == this.nodes[0]) {
+        if (from === this.nodes[0]) {
             this.packets.push([packet, 0, true]);
         }
-        else if (from == this.nodes[1]) {
+        else if (from === this.nodes[1]) {
             this.packets.push([packet, 0, false]);
         }
         else {
@@ -45,10 +45,10 @@ export default class Link extends Drupdatable {
     }
 
     public getOtherEnd(node: AbstractNode): AbstractNode {
-        if (this.nodes[0] == node) {
+        if (this.nodes[0] === node) {
             return this.nodes[1];
         }
-        else if (this.nodes[1] == node) {
+        else if (this.nodes[1] === node) {
             return this.nodes[0];
         }
         else {
