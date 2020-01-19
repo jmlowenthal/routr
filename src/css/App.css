@@ -35,22 +35,35 @@
 }
 
 .GameOver {
-  font-size: 1.7em;
   text-align: center;
   margin: 25px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.GameOver h1 {
+  font-size: 3em;
+  margin: 30px;
+}
+
+.GameOver h2 {
+  font-size: 2em;
+  margin: 10px;
 }
 
 .GameOver-retry {
   text-align: center;
-  margin: 35px;
+  margin: 100px;
 }
 
 .GameOver-retry button {
-  background-color: #20335b;
-  padding: 10px 20px;
-  border-radius: 5px;
+  background-color: #ff8200;
+  padding: 20px 40px;
+  border-radius: 3px;
   border: 1px solid #0b1939;
   cursor: pointer;
   color: white;
-  font-size: 0.8em;
+  font-size: 1em;
 }
