@@ -5,7 +5,7 @@ import { BoundingBox } from '../types';
 import { BadPacket } from '../packet/BadPacket';
 import { Exp } from '../Statistics';
 import Link from '../link/Link';
-import { NODE_MAX_HEALTH, PACKET_SPAWN_GAMMA, INFECTED_SPAWN_PENALTY, MAX_QUEUE_LENGTH, NODE_RADIUS, NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH } from '../MagicNumber';
+import { NODE_MAX_HEALTH, PACKET_SPAWN_GAMMA, INFECTED_SPAWN_PENALTY, MAX_QUEUE_LENGTH, NODE_RADIUS, NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH, ANTIVIRUS_PACKET_HEALTH } from '../MagicNumber';
 
 export class BasicNode extends AbstractNode {
 
@@ -71,7 +71,7 @@ export class BasicNode extends AbstractNode {
               this.health = Math.max(this.health - 1, 0);
           }
           else if (p.isAntiMalware()) {
-              this.health = Math.min(this.health + 1, NODE_MAX_HEALTH);
+              this.health = Math.min(this.health + ANTIVIRUS_PACKET_HEALTH, NODE_MAX_HEALTH);
           }
         }
         else {

@@ -13,3 +13,5 @@ export const INFECTED_SPAWN_PENALTY: number = 0.5;
 export const LINK_SPEED_NUMBER: number = 0.3;
 
 export const PACKET_WIDTH: number = 10;
+
+export const ANTIVIRUS_PACKET_HEALTH: number = 5;
