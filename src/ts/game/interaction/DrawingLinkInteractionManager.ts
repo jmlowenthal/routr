@@ -5,6 +5,7 @@ import Link from "../link/Link";
 import CreateLinkInteractionManager from "./CreateLinkInteractionManager";
 import { Position } from "../types";
 import Drupdatable from "../Drupdatable";
+import { NODE_RADIUS } from "../MagicNumber";
 
 export class DrawingLinkInteractionManager extends InteractionManager {
     private inProgressLink: InProgressLink;
@@ -53,6 +54,11 @@ class InProgressLink extends Drupdatable {
     draw(ctx: CanvasRenderingContext2D) {
         if (this.end) {
             ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.strokeStyle = "white";
+            ctx.fillStyle = "#fff3";
+            ctx.arc(this.start.x, this.start.y, NODE_RADIUS + 13, 0, 360);
+            ctx.fill();
             ctx.beginPath();
             ctx.moveTo(this.start.x, this.start.y);
             ctx.lineTo(this.end.x, this.end.y);
