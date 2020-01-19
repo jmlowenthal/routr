@@ -72,7 +72,7 @@ export default class Link extends Drupdatable {
                 var pos = _this.progressPacket(dt, oldpos);
                 if (_this.attachment && oldpos < 0.5 && pos >= 0.5) {
                     let something = _this.attachment.actUpon(t[0]);
-                    return something.map(s => [s, t[1], t[2]]);
+                    return something.map(s => [s, pos, t[2]]);
                 }
                 return [[t[0], pos, t[2]]];
             });
@@ -94,6 +94,9 @@ export default class Link extends Drupdatable {
     public deleteLink(game: Game){
       this.nodes[0].attachedLinks = this.nodes[0].attachedLinks.filter(l => l !== this);
       this.nodes[1].attachedLinks = this.nodes[1].attachedLinks.filter(l => l !== this);
+      if(this.attachment !== undefined){
+        game.unregisterObject(this.attachment);
+      }
       game.unregisterObject(this);       
     }
 
