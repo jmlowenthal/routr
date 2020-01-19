@@ -4,6 +4,7 @@ import GameMutator from "./GameMutator";
 import { AbstractNode } from "./node/AbstractNode";
 import InteractionManager from "./interaction/InteractionManager";
 import DefaultInteractionManager from "./interaction/DefaultInteractionManager";
+import { AvastNode } from "./node/AvastNode";
 import Link from "./link/Link";
 
 
@@ -35,6 +36,9 @@ export default class Game {
         this.registerObject(new Link([D, C]));
         this.registerObject(new Link([E, C]));
         this.registerObject(new Link([E, B]));
+        let avastNode = new AvastNode(650, 200);
+        this.registerObject(avastNode);
+        this.registerObject(new Link([avastNode, B]));
 
         this.gameMutator = new GameMutator(generateDestination);
         // this.registerObject(this.gameMutator);
