@@ -9,23 +9,24 @@ import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
 import LinkInteractionManager from "./interaction/LinkInteractionManager";
 import { Firewall } from "./link/Firewall"
 import Score from "./Score";
-import { NODES_PER_FIREWALL } from "./MagicNumber";
+import { NODES_PER_FIREWALL, LINKS_PER_NODE } from "./MagicNumber";
 import { Icon } from "./interaction/Icon";
+import Link from "./link/Link";
 
 
 export default class Game {
     private prevTime?: number;
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new ToolbarInteractionManager([
-        [new Icon('/addLink.svg', () => 19), new CreateLinkInteractionManager(this), () => true],
+        [new Icon('/addLink.svg', () => this.getRemainingLinks()), new CreateLinkInteractionManager(this), () => this.getRemainingLinks() > 0],
         [new Icon('/removeLink.svg'), new LinkInteractionManager(this, link => link.deleteLink(this)), () => true],
         [new Icon('/avast-logo.png'), new AvastInteractionManager(this), () => true],
-        [new Icon('/firewall.svg', () => 3), new LinkInteractionManager(this, link => {
+        [new Icon('/firewall.svg', () => this.getRemainingFirewalls()), new LinkInteractionManager(this, link => {
                                 this.registerObject( link.attachment = 
                                   new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) );
                                 this.firewallCount++;
                               }), 
-                              () => Math.ceil((this.nodeCount)/NODES_PER_FIREWALL) > this.firewallCount],
+                              () => this.getRemainingFirewalls() > 0],
     ]);
     private firstUpdate = true;
     private score = 0;
@@ -99,5 +100,14 @@ export default class Game {
 
     getScore() {
         return this.score;
+    }
+
+    private getRemainingFirewalls() {
+        return Math.ceil((this.nodeCount)/NODES_PER_FIREWALL) - this.firewallCount;
+    }
+
+    private getRemainingLinks() {
+        return Math.ceil((this.nodeCount) * LINKS_PER_NODE) -
+                this.objects.reduce((acc, obj) => obj instanceof Link ? acc + 1 : acc, 0);
     }
 }
