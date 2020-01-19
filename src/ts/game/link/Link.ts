@@ -3,6 +3,7 @@ import { AbstractNode } from "../node/AbstractNode";
 import { AbstractAttachment } from "./AbstractAttachment";
 import Drupdatable from "../Drupdatable";
 import { LINK_SPEED_NUMBER, PACKET_WIDTH } from "../MagicNumber";
+import Game from "../Game";
 
 export default class Link extends Drupdatable {
 
@@ -82,6 +83,18 @@ export default class Link extends Drupdatable {
                 node.receivePacket(triplet[0]);
             });
         this.packets = this.packets.filter(triplet => triplet[1] < 1);
+    }
+
+    public midpoint(): [number, number]{
+        let x: number = (this.nodes[0].x + this.nodes[1].x)/2;
+        let y: number = (this.nodes[0].y + this.nodes[1].y)/2;
+        return [x, y];
+    }
+
+    public deleteLink(game: Game){
+      this.nodes[0].attachedLinks = this.nodes[0].attachedLinks.filter(l => l !== this);
+      this.nodes[1].attachedLinks = this.nodes[1].attachedLinks.filter(l => l !== this);
+      game.unregisterObject(this);       
     }
 
     public draw(ctx: CanvasRenderingContext2D) {
