@@ -1,6 +1,5 @@
 import { AbstractPacket } from "./AbstractPacket";
 import { PACKET_WIDTH } from "../MagicNumber";
-import { AbstractNode } from "../node/AbstractNode";
 
 export class BasicPacket extends AbstractPacket {
     priority(): number {

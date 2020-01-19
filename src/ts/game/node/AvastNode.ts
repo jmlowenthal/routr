@@ -1,7 +1,6 @@
 import { AbstractNode } from './AbstractNode';
 import Game from '../Game';
 import { AbstractPacket } from '../packet/AbstractPacket';
-import { BasicNode } from './BasicNode';
 import { BoundingBox } from '../types';
 import { AntiMalwarePacket } from '../packet/AntiMalwarePacket';
 import { NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH } from '../MagicNumber';
