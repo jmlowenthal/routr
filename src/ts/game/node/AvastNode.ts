@@ -1,7 +1,6 @@
 import { AbstractNode } from './AbstractNode';
 import Game from '../Game';
 import { AbstractPacket } from '../packet/AbstractPacket';
-import { BasicNode } from './BasicNode';
 import { BoundingBox } from '../types';
 import { AntiMalwarePacket } from '../packet/AntiMalwarePacket';
 import { NODE_PACKET_LAYOUT_HEIGHT, PACKET_WIDTH } from '../MagicNumber';
@@ -49,16 +48,24 @@ export class AvastNode extends AbstractNode {
             i = i % NODE_PACKET_LAYOUT_HEIGHT;
             let x = this.x - (PACKET_WIDTH / 2) + (PACKET_WIDTH * 1.5) * (j - maxj / 2);
             let y = this.y - 15 - (PACKET_WIDTH * 1.5) * (i + 2);
-            ctx.lineWidth = 2;
-            ctx.fillStyle = "#FF7800";
-            ctx.beginPath();
-            ctx.arc(x + (PACKET_WIDTH * 0.5), y + (PACKET_WIDTH * 0.5), PACKET_WIDTH / 2, 0, 2 * Math.PI);
-            ctx.fill();
+            p.draw(ctx, x, y);
         });
     }
 
     getBoundingBox(): BoundingBox {
         return [this.x - this.img.width / 2, this.y - this.img.height / 2,
                 this.x + this.img.width / 2, this.y + this.img.height / 2];
+    }
+
+    releasePacket(target: AbstractNode): boolean {
+        if (this.packetsList.length > 0) {
+            let p = this.packetsList[0];
+            p.destination = target;
+            if (this.route(p)) {
+                this.packetsList.shift();
+                return true;
+            }
+        }
+        return false;
     }
 }

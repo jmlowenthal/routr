@@ -1,13 +1,12 @@
 import { AbstractPacket } from "./AbstractPacket";
+import { PACKET_WIDTH } from "../MagicNumber";
 
 export class BasicPacket extends AbstractPacket {
-
-    isBad(): boolean {
-        return false;
+    priority(): number {
+        return 999;
     }
-
-    isAntiMalware(): boolean {
-        return false;
+    draw(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+        ctx.fillStyle = "white";
+        ctx.fillRect(x, y, PACKET_WIDTH, PACKET_WIDTH);
     }
-    
 }
