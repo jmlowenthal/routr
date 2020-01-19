@@ -6,7 +6,7 @@ import { AbstractNode } from "./node/AbstractNode";
 export default class GameMutator extends Drupdatable {
     private static readonly NODE_CREATION_RATE_PARAM = 1000000;
     private static readonly MIN_DISTANCE_BETWEEN_OBJECTS = 30;
-    private static readonly INFECTION_TIMESTEP: number = 30_000; //ms
+    private static readonly INFECTION_TIMESTEP: number = 60_000; //ms
 
     private nodeNames = "DEFGHIJKLMNOPQRSTUVWZYZ".split("");
     private timeSinceLastNodeCreation = 0;
