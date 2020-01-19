@@ -1,7 +1,7 @@
 import InteractionManager from "./InteractionManager";
 import Game from "../Game";
 import { AbstractNode } from "../node/AbstractNode";
-import DrawingLinkInteractionManager from "./DrawingLinkInteractionManager";
+import { DrawingLinkInteractionManager } from "./DrawingLinkInteractionManager";
 import { Position } from "../types";
 
 export default class CreateLinkInteractionManager extends InteractionManager {
