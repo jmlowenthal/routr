@@ -97,7 +97,7 @@ export class BasicNode extends AbstractNode {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        ctx.lineWidth = 8 * (this.health / BasicNode.MAX_HEALTH) + 2;
+        ctx.lineWidth = 6 * (this.health / BasicNode.MAX_HEALTH) + 4;
         ctx.fillStyle = this.health > 0 ? 'white' : 'red';
         ctx.strokeStyle = this.health > 0 ? 'white' : 'red';
         ctx.beginPath();
