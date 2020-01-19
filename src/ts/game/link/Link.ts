@@ -96,7 +96,7 @@ export default class Link extends Drupdatable {
         ctx.moveTo(x0, y0);
         ctx.lineTo(x1, y1);
         ctx.stroke();
-        
+        ctx.setLineDash([]);
         this.packets.forEach(p => {
             ctx.fillStyle = p[0].isBad() ? "red" : "white";
             let l = p[2] ? p[1] : 1 - p[1];
@@ -106,5 +106,9 @@ export default class Link extends Drupdatable {
         });
 
         ctx.fillStyle = "white";
+    }
+
+    zIndex() {
+        return 20;
     }
 }

@@ -8,7 +8,7 @@ import { Exp } from '../Statistics';
 export class BasicNode extends AbstractNode {
 
     public static readonly RADIUS: number = 20;
-    public static readonly MAX_HEALTH: number = 5;
+    public static readonly MAX_HEALTH: number = 10;
     public static readonly MAX_QUEUE_LENGTH: number = 20;
     public static readonly PACKET_DELAY_GAMMA: number = 1500;
     public static readonly MAX_STACK_HEIGHT: number = 5;

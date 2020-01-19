@@ -6,16 +6,12 @@ import InteractionManager from "./interaction/InteractionManager";
 import DefaultInteractionManager from "./interaction/DefaultInteractionManager";
 import { AvastNode } from "./node/AvastNode";
 import Link from "./link/Link";
-import { Exp, Linear, Uniform } from "./Statistics";
 
 
 export default class Game {
-    private initialTime?: number;
-    private time = 0;
+    private prevTime?: number = 0;
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new DefaultInteractionManager(this);
-
-    public static readonly INFECTION_TIMESTEP: number = 30_000; //ms
 
     private objects: Drupdatable[] = [];
 
@@ -49,13 +45,12 @@ export default class Game {
 
     update(timestamp: number, ctx: CanvasRenderingContext2D, width: number, height: number) {
         let dt: number;
-        if (this.initialTime === undefined) {
-            this.initialTime = timestamp;
+        if (this.prevTime === undefined) {
             dt = 0;
-            this.time = 0;
+            this.prevTime = timestamp;
         } else {
-            dt = timestamp - this.time - this.initialTime;
-            this.time = timestamp - this.initialTime;
+            dt = timestamp - this.prevTime;
+            this.prevTime = timestamp;
         }
 
         this.gameMutator.setScreenDimensions(width, height);
@@ -64,13 +59,10 @@ export default class Game {
         ctx.strokeStyle = 'white';
 
         [...this.objects].forEach(object => object.update(dt, this));
-        this.objects.forEach(object => object.draw(ctx));
-        this.objects = this.objects.sort((x, y) => 0.5 - Math.random());
-
-        if (Math.floor((this.time - dt) / Game.INFECTION_TIMESTEP) != Math.floor(this.time / Game.INFECTION_TIMESTEP)) {
-            var nodes = this.objects.filter(o => o instanceof BasicNode) as BasicNode[];
-            nodes[Math.floor(Math.random() * nodes.length)].setHealth(0);
-        }
+        this.objects
+                .filter(obj => obj.zIndex() !== undefined)
+                .sort((a, b) => a.zIndex()! - b.zIndex()!)
+                .forEach(object => object.draw(ctx));
     }
 
     registerObject(object: Drupdatable) {
