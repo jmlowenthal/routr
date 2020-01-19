@@ -128,7 +128,7 @@ export class BasicNode extends AbstractNode {
     }
 
     getBoundingBox(): BoundingBox {
-        return [this.x - NODE_RADIUS, this.y - NODE_RADIUS, this.x + NODE_RADIUS, this.y + NODE_RADIUS];
+        return [this.x - NODE_RADIUS, this.y - NODE_RADIUS - (NODE_PACKET_LAYOUT_HEIGHT * PACKET_WIDTH * 1.5), this.x + NODE_RADIUS, this.y + NODE_RADIUS];
     }
 
     getPacketList(): AbstractPacket[] {

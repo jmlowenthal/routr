@@ -4,8 +4,6 @@ import GameMutator from "./GameMutator";
 import { AbstractNode } from "./node/AbstractNode";
 import InteractionManager from "./interaction/InteractionManager";
 import CreateLinkInteractionManager from "./interaction/CreateLinkInteractionManager";
-import { AvastNode } from "./node/AvastNode";
-import Link from "./link/Link";
 import { ToolbarInteractionManager } from "./interaction/ToolbarInteractionManager";
 import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
 import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
@@ -44,10 +42,8 @@ export default class Game {
         this.gameMutator.setScreenDimensions(width, height);
 
         if (this.firstUpdate) {
-            let avastNode = new AvastNode(width/2, height/2);
-            this.registerObject(avastNode);
-            this.firstUpdate = false;
             this.gameMutator.generateInitialNodes(this);
+            this.firstUpdate = false;
         }
 
         ctx.clearRect(0, 0, width, height);
