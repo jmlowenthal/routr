@@ -8,22 +8,28 @@ import { ToolbarInteractionManager } from "./interaction/ToolbarInteractionManag
 import { CreateLinkIcon } from "./interaction/CreateLinkIcon";
 import { AvastInteractionManager } from "./interaction/AvastInteractionManager";
 import LinkInteractionManager from "./interaction/LinkInteractionManager";
-import { Firewall } from "./link/Firewall"
+import { Firewall } from "./link/Firewall";
+import { NODES_PER_FIREWALL } from "./MagicNumber";
 
 
 export default class Game {
     private prevTime?: number;
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new ToolbarInteractionManager([
-        [new CreateLinkIcon('/addLink.svg'), new CreateLinkInteractionManager(this)],
-        [new CreateLinkIcon('/removeLink.svg'), new LinkInteractionManager(this, link => link.deleteLink(this))],
-        [new CreateLinkIcon('/avast-logo.png'), new AvastInteractionManager(this)],
-        [new CreateLinkIcon('/firewall.svg'), new LinkInteractionManager(this, link => this.registerObject( link.attachment = 
-                                new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) ))],
+        [new CreateLinkIcon('/addLink.svg'), new CreateLinkInteractionManager(this), () => true],
+        [new CreateLinkIcon('/removeLink.svg'), new LinkInteractionManager(this, link => link.deleteLink(this)), () => true],
+        [new CreateLinkIcon('/avast-logo.png'), new AvastInteractionManager(this), () => true],
+        [new CreateLinkIcon('/firewall.svg'), new LinkInteractionManager(this, link => {
+                                this.registerObject( link.attachment = 
+                                  new Firewall(link.midpoint(), [link.getNodes()[0].x, link.getNodes()[0].y]) );
+                                this.firewallCount++;
+                              }), 
+                              () => Math.ceil((this.nodeCount)/NODES_PER_FIREWALL) > this.firewallCount],
     ]);
     private firstUpdate = true;
     private score = 0;
-
+    public nodeCount = 0;
+    private firewallCount = 0;
     private objects: Drupdatable[] = [];
 
     constructor(private gameOverCallback: (score: number) => void) {
