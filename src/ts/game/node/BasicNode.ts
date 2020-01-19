@@ -14,7 +14,7 @@ export class BasicNode extends AbstractNode {
     private health: number = NODE_MAX_HEALTH;
 
     constructor(
-            private generateDestination: (_: AbstractNode) => AbstractNode | null,
+            private generateDestination: () => AbstractNode,
             private name: string,
             x: number,
             y: number) {
@@ -27,8 +27,8 @@ export class BasicNode extends AbstractNode {
         if (this.health > 0) {
             if (Math.random() < Exp(PACKET_SPAWN_GAMMA, this.timer - dt, this.timer)) {
                 this.timer = 0;
-                let dest = this.generateDestination(this);
-                if (dest) {
+                let dest = this.generateDestination();
+                if (dest && dest !== this) {
                     let packet = new BasicPacket(this, dest);
                     this.packetsList.push(packet);
                 }
