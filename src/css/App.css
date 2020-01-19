@@ -45,10 +45,12 @@
   margin: 35px;
 }
 
-.GameOver-retry a {
+.GameOver-retry button {
   background-color: #20335b;
   padding: 10px 20px;
   border-radius: 5px;
   border: 1px solid #0b1939;
   cursor: pointer;
+  color: white;
+  font-size: 0.8em;
 }

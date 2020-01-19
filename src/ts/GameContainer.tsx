@@ -34,7 +34,7 @@ export class GameContainer extends React.Component<GameProps, {gameRunning: bool
                 <div className="GameOver">
                     Game Over. You scored {this.state.score}!
                     <div className="GameOver-retry">
-                        <a onClick={() => this.setState({gameRunning: true})}>Try again</a>
+                        <button onClick={this.retry.bind(this)}>Try again</button>
                     </div>
                 </div>
             )
@@ -78,6 +78,8 @@ export class GameContainer extends React.Component<GameProps, {gameRunning: bool
                 this.game.update(timestamp, ctx, width, height);
                 if (this.state.gameRunning) {
                     this.animationFrame = requestAnimationFrame(this.animationCallback);
+                } else {
+                    this.animationFrame = undefined;
                 }
             }
             this.animationFrame = requestAnimationFrame(this.animationCallback);
@@ -96,6 +98,13 @@ export class GameContainer extends React.Component<GameProps, {gameRunning: bool
         this.setState({
             gameRunning: false,
             score: score,
+        });
+    }
+
+    retry() {
+        this.game = new Game(this.gameOver.bind(this));
+        this.setState({
+            gameRunning: true,
         });
     }
 }

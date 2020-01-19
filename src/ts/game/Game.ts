@@ -12,7 +12,7 @@ import { Firewall } from "./link/Firewall"
 
 
 export default class Game {
-    private prevTime?: number = 0;
+    private prevTime?: number;
     private gameMutator: GameMutator;
     private interactionManager: InteractionManager = new ToolbarInteractionManager([
         [new CreateLinkIcon('/addLink.svg'), new CreateLinkInteractionManager(this)],
