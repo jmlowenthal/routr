@@ -55,6 +55,7 @@ class InProgressLink extends Drupdatable {
         if (this.end) {
             ctx.lineWidth = 2;
             ctx.beginPath();
+            ctx.strokeStyle = "white";
             ctx.fillStyle = "#fff3";
             ctx.arc(this.start.x, this.start.y, NODE_RADIUS + 13, 0, 360);
             ctx.fill();
