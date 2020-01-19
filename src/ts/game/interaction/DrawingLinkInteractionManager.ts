@@ -35,20 +35,23 @@ export class DrawingLinkInteractionManager extends InteractionManager {
     }
 
     handleMouseMove(pos: Position) {
-        this.inProgressLink.updateEnd(pos);
+        let clickedObjects = this.game.getObjects().filter(object => object.inside(pos) && object instanceof AbstractNode) as AbstractNode[];
+        this.inProgressLink.updateEnd(pos, clickedObjects);
         return this;
     }
 }
 
 class InProgressLink extends Drupdatable {
     private end?: Position;
+    private nodes: AbstractNode[] = [];
 
     constructor(private start: Position) {
         super();
     }
 
-    updateEnd(pos?: Position) {
+    updateEnd(pos: Position, nodes: AbstractNode[]) {
         this.end = pos;
+        this.nodes = nodes;
     }
 
     draw(ctx: CanvasRenderingContext2D) {
@@ -63,6 +66,13 @@ class InProgressLink extends Drupdatable {
             ctx.moveTo(this.start.x, this.start.y);
             ctx.lineTo(this.end.x, this.end.y);
             ctx.stroke();
+            this.nodes.forEach(n => {
+                ctx.beginPath();
+                ctx.strokeStyle = "white";
+                ctx.fillStyle = "#fff3";
+                ctx.arc(n.x, n.y, NODE_RADIUS + 13, 0, 360);
+                ctx.fill();
+            })
         }
     }
 
